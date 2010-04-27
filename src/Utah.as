@@ -62,30 +62,31 @@ package
 			
 			addChild(ZUI);
 			
-			var title : TextSprite = new TextSprite();
-			title.color = 0xff0000;
-			title.alpha = 1;
-			title.font = "Calibri";
-			title.x = 10;
-			title.y = 2;
-			title.size = 18;
-			title.text = "Utah 1998 - 2008";
-			addChild(title);
 			
+			// timeline configuration
 			tl = new timeline(33, 560, 330, 1998, 2008);
 			var yrArray:Array = new Array(1998, 2003, 2008);
-			var intArray:Array = new Array(0, 33, 66, 100);
+			var intArray:Array = new Array(0, 33, 66);
 			tl.setYearsInts(yrArray, intArray);
 			tl.DrawTimeline();
 			tl.addEventListener(Event.CHANGE, tlHandler);
 			addChild(tl);
 			
+			year_display = new TextSprite();
+			year_display.x = 10;
+			year_display.y = 2;
+			year_display.color = 0x0D658A;
+			year_display.font = "Calibri";
+			year_display.text = "Utah PH vs. PA Year " + tl.getSelectedYear().toString();
+			year_display.size = 24;
+			addChild(year_display);
+			
 			
 			// tooltip configurations
 			var tt_text_size:int = 16;
 			var tt_vert_spacing:int = 18;
-			var tt_ox:int = 420;
-			var tt_oy:int = 540;
+			var tt_ox:int = 630;
+			var tt_oy:int = 320;
 			
 			tt_county = new TextSprite();
 			tt_county.color = 0xffffff;
@@ -253,8 +254,9 @@ package
 		
 		private function tlHandler(evt:Event):void
 		{
+			trace("tlHandler " + tl.getSelectedZone() + ", year " + tl.getSelectedYear());
 			this_year = tl.getSelectedYear();
-			year_display.text = "Year " + this_year.toString();
+			year_display.text = "Utah PH vs. PA Year " + this_year.toString();
 			mapObj.SetMapEmbedSrc(tl.getSelectedZone());
 		}
 		
