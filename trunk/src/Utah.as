@@ -13,14 +13,25 @@ package
 	public class Utah extends Sprite
 	{
 		
+		// the map object for the SVG map and frame
+		private var mapObj:Object;
+		
 		private var blackBG:Sprite;
 		
 		private var ZUI:ZoomUI;
 		
-		private var mapObj:Object;
+		private var tl:timeline;
+		private var this_year:int;
+		private var year_display:TextSprite;
 		
 		private var _bar: ProgressBar;
-
+		
+		// tooltip text sprites
+		private var tt_county:TextSprite;
+		private var tt_category:TextSprite;
+		private var tt_pop:TextSprite;
+		private var tt_ph:TextSprite;
+		private var tt_pa:TextSprite;
 
 		public function Utah()
 		{
@@ -30,8 +41,12 @@ package
 			blackBG.graphics.endFill();
 			addChild(blackBG); // !!!
 			
-			//loadMap();
-		
+			ZUI = new ZoomUI(0.3, 0.1, 10.0);
+			this.addEventListener( MouseEvent.MOUSE_DOWN, onDrag);
+			ZUI.addEventListener(Event.CHANGE, ZUIHandler);
+			ZUI.addMapControl();
+			
+			loadMap();
 			
 			var ctrlPanel : Sprite = new Sprite();
 			ctrlPanel.graphics.beginFill(0x000000, 0.6);  // !!!
@@ -45,10 +60,6 @@ package
 			divider.graphics.endFill();
 			addChild(divider);
 			
-			ZUI = new ZoomUI(0.3, 0.1, 10.0);
-			this.addEventListener( MouseEvent.MOUSE_DOWN, onDrag);
-			ZUI.addEventListener(Event.CHANGE, ZUIHandler);
-			ZUI.addMapControl();
 			addChild(ZUI);
 			
 			var title : TextSprite = new TextSprite();
@@ -58,9 +69,68 @@ package
 			title.x = 10;
 			title.y = 2;
 			title.size = 18;
-			title.text = "Utah 1998 - 2003";
+			title.text = "Utah 1998 - 2008";
 			addChild(title);
 			
+			tl = new timeline(33, 560, 330, 1998, 2008);
+			var yrArray:Array = new Array(1998, 2003, 2008);
+			var intArray:Array = new Array(0, 33, 66, 100);
+			tl.setYearsInts(yrArray, intArray);
+			tl.DrawTimeline();
+			tl.addEventListener(Event.CHANGE, tlHandler);
+			addChild(tl);
+			
+			
+			// tooltip configurations
+			var tt_text_size:int = 16;
+			var tt_vert_spacing:int = 18;
+			var tt_ox:int = 420;
+			var tt_oy:int = 540;
+			
+			tt_county = new TextSprite();
+			tt_county.color = 0xffffff;
+			tt_county.size = tt_text_size;
+			tt_county.font = "Calibri";
+			tt_county.x = tt_ox;
+			tt_county.y = tt_oy;
+			tt_county.visible = true;
+			addChild(tt_county);
+			
+			tt_category = new TextSprite();
+			tt_category.color = 0xffffff;
+			tt_category.size = tt_text_size;
+			tt_category.font = "Calibri";
+			tt_category.x = tt_ox;
+			tt_category.y = tt_oy + tt_vert_spacing*1;
+			tt_category.visible = true;
+			addChild(tt_category);
+			
+			tt_pop = new TextSprite();
+			tt_pop.color = 0xffffff;
+			tt_pop.size = tt_text_size;
+			tt_pop.font = "Calibri";
+			tt_pop.x = tt_ox;
+			tt_pop.y = tt_oy + tt_vert_spacing*2;
+			tt_pop.visible = true;
+			addChild(tt_pop);
+			
+			tt_ph = new TextSprite();
+			tt_ph.color = 0xffffff;
+			tt_ph.size = tt_text_size;
+			tt_ph.font = "Calibri";
+			tt_ph.x = tt_ox;
+			tt_ph.y = tt_oy + tt_vert_spacing*3;
+			tt_ph.visible = true;
+			addChild(tt_ph);
+			
+			tt_pa = new TextSprite();
+			tt_pa.color = 0xffffff;
+			tt_pa.size = tt_text_size;
+			tt_pa.font = "Calibri";
+			tt_pa.x = tt_ox;
+			tt_pa.y = tt_oy + tt_vert_spacing*4;
+			tt_pa.visible = true;
+			addChild(tt_pa);
 		}
 		
 		
@@ -82,14 +152,14 @@ package
 			// *********** Below code loads shp object ************ //
 			mapObj = new ShpMapObject(797, 611, mapContainer, _bar);
 			mapObj.addEventListener("all map loaded", allMapLoaded);
-			//mapObj.addEventListener(Event.CHANGE, ttHandler);    // handles tooltips events
-			mapObj.showMode = "percapita_physicians";
+			mapObj.addEventListener(Event.CHANGE, ttHandler);    // handles tooltips events
+			mapObj.showMode = "utah";
 			
 			mapObj.SetMapColor(0xff0000);
 			mapObj.SetMap(0, 0, 767, 611);
 			
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
-			//mapObj.addEventListener(Event.CHANGE, ttHandler);    // handles tooltips events
+			mapObj.addEventListener(Event.CHANGE, ttHandler);    // handles tooltips events
 			
 			//initTTGraphics();
 			
@@ -97,7 +167,6 @@ package
 		}
 		
 		private function allMapLoaded(event:Event):void {
-			
 			try {
 				removeChild(_bar);
 			} catch (e:ArgumentError) {
@@ -105,7 +174,7 @@ package
 			}
 			mapObj.updateMapColor();
 			//single_selected = tl_single.getCurSelectedZone();
-			mapObj.SetMapEmbedSrc(3);
+			mapObj.SetMapEmbedSrc(3-1);  // hard code
 		}
 		
 		
@@ -160,6 +229,49 @@ package
 			// do rescale functions here
 			
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
+		}
+		
+		private function ttHandler(event:Event):void
+		{
+			var cnty:String = mapObj.getCounty();
+			if(cnty.length > 0){
+				tt_county.text = mapObj.getCounty();
+				tt_category.text = mapObj.getCategory();
+				tt_pop.text = "Population: " + mapObj.getPop();
+				tt_ph.text = "PH: " + mapObj.getPh();
+				tt_pa.text = "PA: " + mapObj.getPa();
+			}
+			else{
+				tt_county.text = "";
+				tt_category.text = "";
+				tt_pop.text = "";
+				tt_ph.text = "";
+				tt_pa.text = "";
+			}
+			
+		}
+		
+		private function tlHandler(evt:Event):void
+		{
+			this_year = tl.getSelectedYear();
+			year_display.text = "Year " + this_year.toString();
+			mapObj.SetMapEmbedSrc(tl.getSelectedZone());
+		}
+		
+		/*
+		 * used for debugging
+		 * add a big text message on upper left corner
+		 */
+		private function DEBUGInfo(info:String):void {
+			var title : TextSprite = new TextSprite();
+			title.color = 0x000000;
+			title.alpha = 1;
+			title.font = "Calibri";
+			title.x = 0;
+			title.y = 0;
+			title.size = 30;
+			title.text = info;
+			this.addChild(title);
 		}
 	}
 }

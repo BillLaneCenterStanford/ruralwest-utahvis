@@ -21,10 +21,8 @@ package
 			
 			// if using shp files on local //
 			
-			super("../shp/us"+year.toString()+".shp",
-				"../shp/US"+year.toString()+".DBF",
-				censusData);
-			
+			//super("../shp/utah93.shp", "../shp/utah93.dbf", censusData);
+			super("../shp/us.SHP", "../shp/us.DBF", censusData);
 		}
 	}
 }
