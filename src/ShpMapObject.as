@@ -37,17 +37,16 @@ package
 		private var mapLoadedCount:Number = 0;
 		private var _bar:ProgressBar;
 		
-		private var curCounty:String = "";
-		private var state:String = "";
-		private var population:String = "";
-		private var area:String = "";
-		private var num_physicians:String = "";
-		private var per_capita_physicians:String = "";
+		private var tt_county:String = "";
+		private var tt_category:String = "";
+		private var tt_pop:String = "";
+		private var tt_ph:String = "";
+		private var tt_pa:String = "";
 		
 		
 		// "none", "percapita_physicians", "population", "density", "percent"
-		public var showMode:String = "population";
-		public var years:Array = new Array(1909, 1980, 2000, 2009);
+		public var showMode:String = "utah";
+		public var years:Array = new Array(1998, 2003, 2008);
 		
 		private var border:Boolean;  
 		
@@ -70,17 +69,12 @@ package
 			loaderArray.push(loader);
 			}
 			*/
-			
-			
-			//years[0] = 1909;
-			//years[1] = 1980;
-			//years[2] = 2000;
-			//years[3] = 2009;
+
 			var i:int, year:int;
-			for (i = 0; i < 4; i++) {
+			for (i = 0; i < years.length; i++) {
 				year = years[i];
 				var loader:URLLoader = new URLLoader();
-				loader.load(new URLRequest("../dat/physician_by_county" + year.toString() + ".xml"));
+				loader.load(new URLRequest("../dat/Utah_PH_PA_" + year.toString() + ".xml"));
 				loader.addEventListener(Event.COMPLETE, xmlLoadComplete);
 				loaderArray.push(loader);
 			}
@@ -91,47 +85,39 @@ package
 		private function xmlLoadComplete(event:Event):void {
 			countLoadedXML += 1;
 			trace(countLoadedXML);
-			if (countLoadedXML == 4) {
+			if (countLoadedXML == years.length) {
 				loadShpMaps();
 			}
 		}
 		
 		private function loadShpMaps():void {
-			trace('$census data loaded$');
+			trace('$utah data loaded$');
 			var i:int;
-			
-			for (i=0; i<4 ; i++) {
+			for (i=0; i < years.length ; i++) {
 				var censusData:Dictionary = new Dictionary();
-				//var dictChangePopulation:Dictionary = new Dictionary();
+
 				xmlCountyData = new XML(loaderArray[i].data);
 				for each (var county:Object in xmlCountyData.county) {
 					var obj:Object = new Object;
-					
+
 					/*
-					obj["total"]  = parseInt(county["totPop"]);
-					obj["change"] = county["change"].toString();
-					obj["age17"]  = parseInt(county["age17"]);
-					obj["age20"]  = parseInt(county["age20"]);
-					obj["age44"]  = parseInt(county["age44"]);
-					obj["age65"]  = parseInt(county["age65"]);
-					obj["edu18"]  = parseFloat(county["edu18"]);
-					obj["changeColor"] = 0x000000;
-					obj["changeText"] = "";
-					*/
-					
 					obj["fips"] = county["fips"].toString();
 					obj["countyname"] = county["countyname"].toString();
 					obj["numPhys"] = parseInt(county["numPhys"]);
 					obj["numPop"] = parseInt(county["numPop"]);
 					obj["state"] = county["state"].toString();
+					*/
+					obj["countyname"] = county["countyname"].toString();
+					obj["fips"] = county["fips"].toString();
+					obj["category"] = county["category"].toString();
+					obj["ph"] = parseInt(county["ph"]);
+					obj["pa"] = parseInt(county["pa"]);
+					obj["pop"] = parseInt(county["pop"]);
 					
 					censusData[county["fips"].toString()] = obj;
 					
-					//dictChangePopulation[county["fips"].toString()] = county["change"].toString();
 				}
-				//dictCountyPopArray.push(censusData);
 				
-				//var year:Number = 1850+i*10;
 				var year:Number = this.years[i];
 				var elem:ShpMapElement = new ShpMapElement(year, censusData);
 				elem.addEventListener(Event.CHANGE, countyChangeHandler);
@@ -158,42 +144,38 @@ package
 		// THESE ARE FOR TOOL TIPS:
 		private function countyChangeHandler(event:Event):void
 		{
-			curCounty = event.currentTarget.getCounty();
-			population = event.currentTarget.getPopulation();
-			area = event.currentTarget.getArea();
-			state = event.currentTarget.getState();
-			num_physicians = event.currentTarget.getNumPhysicians();
-			per_capita_physicians = event.currentTarget.getPerCapita();
+			tt_county = event.currentTarget.getCounty();
+			tt_category = event.currentTarget.getCategory();
+			tt_pop = event.currentTarget.getPop();
+			tt_ph = event.currentTarget.getPh();
+			tt_pa = event.currentTarget.getPa();
 			
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
 		public function getCounty():String{
-			return curCounty;
+			return tt_county;
 		}
-		public function getState():String{
-			return state;
+		public function getCategory():String{
+			return tt_category;
 		}
-		public function getPopulation():String{
-			return population;
+		public function getPop():String{
+			return tt_pop;
 		}
-		public function getArea():String{
-			return area;
+		public function getPh():String{
+			return tt_ph;
 		}
-		public function getNumPhysicians():String{
-			return num_physicians;
-		}
-		public function getPerCapita(){
-			return per_capita_physicians;
+		public function getPa():String{
+			return tt_pa;
 		}
 		
 		// THE ABOVE WERE FOR TOOLTIPS
 		
 		// Need to wait for the map to finish loading/drawing before it can be resized correctly.
-		private var onMapLoaded:Function = function(event:Event):void
+		//private var onMapLoaded:Function = function(event:Event):void
+		private function onMapLoaded(event:Event):void
 		{
 			trace("$onMapLoaded$");
-			
 			var map:Object = event.target;
 			_container.addChild(Sprite(map));
 			//map.scaleX = map.scaleY = map.width > map.height ? _stage_width/map.width : _stage_height/map.height;
@@ -215,14 +197,14 @@ package
 		}
 		
 		// To demonstrate retrieving a particular feature and doing something to it. This colors Wisconsin green.
-		private var onAttributesLoaded:Function = function(event:Event):void
+		private function onAttributesLoaded(event:Event):void
 		{
 			trace("$onAttributedsLoaded$")
 			mapLoadedCount++;
 			trace(mapLoadedCount);
 			
-			_bar.progress = mapLoadedCount / 4;
-			if (mapLoadedCount >= 4) {
+			_bar.progress = mapLoadedCount / years.length;
+			if (mapLoadedCount >= years.length) {
 				dispatchEvent(new Event("all map loaded",true));
 			}
 			
@@ -231,7 +213,7 @@ package
 		}
 		
 		public function updateMapColor():void {
-			for (var i:int = 0; i<4; i++) {
+			for (var i:int = 0; i<3; i++) {
 				mapArray[i].getBorder(border);
 				mapArray[i].updateMapColor(showMode);
 			}
