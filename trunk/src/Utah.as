@@ -67,7 +67,11 @@ package
 			divider.graphics.endFill();
 			
 			divider.graphics.beginFill(0xeeeeee);
-			divider.graphics.drawRect(610, 450, 195, 5);
+			divider.graphics.drawRect(610, 505, 195, 5);
+			divider.graphics.endFill();
+			
+			divider.graphics.beginFill(0xeeeeee);
+			divider.graphics.drawRect(610, 285, 195, 5);
 			divider.graphics.endFill();
 			addChild(divider);
 			
@@ -85,27 +89,28 @@ package
 			
 			year_display = new TextSprite();
 			year_display.x = 10;
-			year_display.y = 2;
-			year_display.color = 0x0D658A;
+			year_display.y = 5;
+			year_display.color = 0x333333;
 			year_display.font = "Calibri";
-			year_display.text = "Utah PH vs. PA Year " + tl.getSelectedYear().toString();
-			year_display.size = 24;
+			year_display.text = "Relative change in physicians and allied health professional per capita in Utah, 1998-2003";
+			year_display.size = 19;
+			year_display.bold = true;
 			addChild(year_display);
 			
 			
-			var tt_title:TextSprite = new TextSprite("Data Tooltips");
+			var tt_title:TextSprite = new TextSprite("Data tooltips");
 			tt_title.color = 0xffffff;
-			tt_title.size = 20;
+			tt_title.size = 18;
 			tt_title.font = "Calibri";
 			tt_title.x = 630;
-			tt_title.y = 470;
+			tt_title.y = 515;
 			addChild(tt_title);
 			
 			// tooltip configurations
-			var tt_text_size:int = 18;
-			var tt_vert_spacing:int = 22;
+			var tt_text_size:int = 16;
+			var tt_vert_spacing:int = 18;
 			var tt_ox:int = 635;
-			var tt_oy:int = 500;
+			var tt_oy:int = 542;
 			
 			tt_county = new TextSprite();
 			tt_county.color = 0xffffff;
@@ -160,7 +165,7 @@ package
 			
 			urbanBorderCB = new CheckBox();
 			urbanBorderCB.x = 630;
-			urbanBorderCB.y = 360;
+			urbanBorderCB.y = 220;
 			urbanBorderCB.selected = false;
 			urbanBorderCB.label = "";
 			addChild(urbanBorderCB);
@@ -173,17 +178,53 @@ package
 			ub_label.color = 0xffffff;
 			ub_label.alpha = 0.8;
 			ub_label.x = 657;
-			ub_label.y = 355;
+			ub_label.y = 215;
 			addChild(ub_label);
 			
+			var ltitle:TextSprite = new TextSprite("Legend");
+			ltitle.color = 0xffffff;
+			ltitle.alpha = 1.0;
+			ltitle.size = 18;
+			ltitle.font = "Calibri";
+			ltitle.x = 630;
+			ltitle.y = 295;
+			addChild(ltitle);
 			
+			var lph:TextSprite = new TextSprite("PH = Practicing Physicians");
+			lph.color = 0xffffff;
+			lph.alpha = 0.7;
+			lph.size = 12;
+			lph.font = "Calibri";
+			lph.x = 635;
+			lph.y = 320;
+			addChild(lph);
+			
+			var lpa:TextSprite = new TextSprite("PA = Physician's Assistants");
+			lpa.color = 0xffffff;
+			lpa.alpha = 0.7;
+			lpa.size = 12;
+			lpa.font = "Calibri";
+			lpa.x = 635;
+			lpa.y = 335;
+			addChild(lpa);
+			
+			var lpn:TextSprite = new TextSprite("NP = Nurse Practitioners");
+			lpn.color = 0xffffff;
+			lpn.alpha = 0.7;
+			lpn.size = 12;
+			lpn.font = "Calibri";
+			lpn.x = 635;
+			lpn.y = 350;
+			addChild(lpn);
 			// legend
-			myLegend = new LegendBar(635, 250, 20, 6, "utah");
+			myLegend = new LegendBar(640, 375, 30, 6, "utah");
 			addChild(myLegend);
 		}
 		
 		private function CBUrbanHandler(event:Event):void {
-			
+		  mapObj.getHighlightUrban(urbanBorderCB.selected);
+      mapObj.updateMapColor();
+
 		}
 		
 		private function loadMap():void
@@ -309,7 +350,7 @@ package
 		{
 			trace("tlHandler " + tl.getSelectedZone() + ", year " + tl.getSelectedYear());
 			this_year = tl.getSelectedYear();
-			year_display.text = "Utah PH vs. PA Year " + this_year.toString();
+			year_display.text = "Relative change in physicians and allied health professional per capita in Utah, 1998-2003";
 			mapObj.SetMapEmbedSrc(tl.getSelectedZone());
 		}
 		

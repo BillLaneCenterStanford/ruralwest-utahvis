@@ -86,15 +86,21 @@ package
 				}
 				*/
 				var colorArray:Array = new Array();
-				colorArray[0] = 0x73d216;
-				colorArray[1] = 0x8ae234;
-				colorArray[2] = 0xef2929;
+				colorArray[0] = 0x489100;
+				colorArray[1] = 0x9FDB64;
+				colorArray[2] = 0xD9958A;
 				colorArray[3] = 0xcc0000;
 				var textArray:Array = new Array();
+				/*
 				textArray[0] = "\u0394PH > \u0394PA+PN > 0";
 				textArray[1] = "\u0394PA+PN > \u0394PH > 0";
 				textArray[2] = "0 > \u0394PA+PN > \u0394PH";
 				textArray[3] = "0 > \u0394PH > \u0394PA+PN";
+				*/
+				textArray[0] = "incr. in PHs > incr. \r in PAs + NPs";
+				textArray[1] = "incr. in PAs + NPs > \r incr. in PHs";
+				textArray[2] = "decr. in PHs > decr. \r in PAs + NPs";
+				textArray[3] = "decr. in PA + NPs > \r decr. in PHs";
 				for (var i:int = 0; i < colorArray.length; i++) {
 					legendSprite.graphics.beginFill(colorArray[i]);
 					legendSprite.graphics.drawRect(ox, oy + i * segmentLength, 14, segmentLength);
@@ -114,31 +120,31 @@ package
 				}
 			}
 			else {
-				for (var i:int = 0; i < 6; i++){
+				for (var k:int = 0; k < 6; k++){
 					if (showMode == "percapita_physicians") {
-						legendSprite.graphics.beginFill(pcpColorArray[i]);
+						legendSprite.graphics.beginFill(pcpColorArray[k]);
 					}
 					
-					legendSprite.graphics.drawRect(ox , oy + i * segmentLength, 14, segmentLength);
+					legendSprite.graphics.drawRect(ox , oy + k * segmentLength, 14, segmentLength);
 					legendSprite.graphics.endFill();
 				}
 				
-				for(var j:int = 0; j < 6; j++){
-					var txt:TextSprite;
+				for(var l:int = 0; l < 6; l++){
+					var txt2:TextSprite;
 					if(showMode == "percapita_physicians"){
-						if(j == 5)
-							txt = new TextSprite(pcpArray[j]);
+						if(l == 5)
+							txt2 = new TextSprite(pcpArray[l]);
 						else
-							txt = new TextSprite(pcpArray[j] + " per capita");
+							txt2 = new TextSprite(pcpArray[l] + " per capita");
 					}
 					
-					txt.color = 0xffffff;
-					txt.alpha = 0.6;
-					txt.x = ox + 14;
-					txt.y = oy + j * segmentLength;
-					txt.font = "Calibri";
-					txt.size = 12;
-					textContainer.addChild(txt);
+					txt2.color = 0xffffff;
+					txt2.alpha = 0.6;
+					txt2.x = ox + 14;
+					txt2.y = oy + l * segmentLength;
+					txt2.font = "Calibri";
+					txt2.size = 12;
+					textContainer.addChild(txt2);
 				}
 			}      
 		}
