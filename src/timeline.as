@@ -72,7 +72,7 @@ package {
 		  trace(YearArray.length);
 		  IntervalArray = intArr;
 		  
-		  _selected_year = YearArray[int(YearArray.length/2) + 1];
+		  _selected_year = YearArray[int(YearArray.length/2)];
 		  trace(_selected_year);
 		}
 		
