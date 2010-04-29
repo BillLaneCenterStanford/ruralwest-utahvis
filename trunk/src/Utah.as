@@ -10,7 +10,7 @@ package
 	import flash.filters.DropShadowFilter;
 	
 	[SWF(width="810", height="650", backgroundColor="#EBD6A5", frameRate="30")]
-
+	
 	
 	public class Utah extends Sprite
 	{
@@ -36,7 +36,9 @@ package
 		private var tt_papn:TextSprite;
 		
 		private var urbanBorderCB:CheckBox = new CheckBox();
-
+		
+		private var myLegend:LegendBar;
+		
 		public function Utah()
 		{
 			blackBG = new Sprite();
@@ -79,7 +81,7 @@ package
 			tl.setYearsInts(yrArray, intArray);
 			tl.DrawTimeline();
 			tl.addEventListener(Event.CHANGE, tlHandler);
-			addChild(tl);
+			//addChild(tl);
 			
 			year_display = new TextSprite();
 			year_display.x = 10;
@@ -157,27 +159,31 @@ package
 			
 			
 			urbanBorderCB = new CheckBox();
-      urbanBorderCB.x = 630;
-      urbanBorderCB.y = 340;
-      urbanBorderCB.selected = false;
-      urbanBorderCB.label = "";
-      addChild(urbanBorderCB);
-      
-      urbanBorderCB.addEventListener(Event.CHANGE, CBUrbanHandler);
-      
-      var ub_label:TextSprite = new TextSprite("highlight urban \r   county borders");
-      ub_label.font = "Calibri";
-      ub_label.size = 16;
-      ub_label.color = 0xffffff;
-      ub_label.alpha = 0.8;
-      ub_label.x = 657;
-      ub_label.y = 335;
-      addChild(ub_label);
+			urbanBorderCB.x = 630;
+			urbanBorderCB.y = 340;
+			urbanBorderCB.selected = false;
+			urbanBorderCB.label = "";
+			addChild(urbanBorderCB);
 			
+			urbanBorderCB.addEventListener(Event.CHANGE, CBUrbanHandler);
+			
+			var ub_label:TextSprite = new TextSprite("highlight urban \r   county borders");
+			ub_label.font = "Calibri";
+			ub_label.size = 16;
+			ub_label.color = 0xffffff;
+			ub_label.alpha = 0.8;
+			ub_label.x = 657;
+			ub_label.y = 335;
+			addChild(ub_label);
+			
+			
+			// legend
+			myLegend = new LegendBar(635, 230, 20, 6, "utah");
+			addChild(myLegend);
 		}
 		
 		private function CBUrbanHandler(event:Event):void {
-		  
+			
 		}
 		
 		private function loadMap():void
@@ -308,9 +314,9 @@ package
 		}
 		
 		/*
-		 * used for debugging
-		 * add a big text message on upper left corner
-		 */
+		* used for debugging
+		* add a big text message on upper left corner
+		*/
 		private function DEBUGInfo(info:String):void {
 			var title : TextSprite = new TextSprite();
 			title.color = 0x000000;
