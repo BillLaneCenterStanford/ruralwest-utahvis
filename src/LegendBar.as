@@ -90,11 +90,11 @@ package
 				colorArray[1] = 0x8ae234;
 				colorArray[2] = 0xef2929;
 				colorArray[3] = 0xcc0000;
-				var textArray:Array = new Array();				
-				textArray[0] = "change of PH > change of PA+PN > 0";
-				textArray[1] = "change of PA+PN > change of PH > 0";
-				textArray[2] = "0 > change of PA+PN > change of PH";
-				textArray[3] = "0 > change of PH > change of PA+PN";
+				var textArray:Array = new Array();
+				textArray[0] = "\u0394PH > \u0394PA+PN > 0";
+				textArray[1] = "\u0394PA+PN > \u0394PH > 0";
+				textArray[2] = "0 > \u0394PA+PN > \u0394PH";
+				textArray[3] = "0 > \u0394PH > \u0394PA+PN";
 				for (var i:int = 0; i < colorArray.length; i++) {
 					legendSprite.graphics.beginFill(colorArray[i]);
 					legendSprite.graphics.drawRect(ox, oy + i * segmentLength, 14, segmentLength);
@@ -106,7 +106,7 @@ package
 
 					txt.color = 0xffffff;
 					txt.alpha = 0.6;
-					txt.x = ox + 14;
+					txt.x = ox + 22;
 					txt.y = oy + j * segmentLength;
 					txt.font = "Calibri";
 					txt.size = 12;
