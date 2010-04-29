@@ -33,7 +33,7 @@ package
 		private var tt_category:TextSprite;
 		private var tt_pop:TextSprite;
 		private var tt_ph:TextSprite;
-		private var tt_pa:TextSprite;
+		private var tt_papn:TextSprite;
 		
 		private var urbanBorderCB:CheckBox = new CheckBox();
 
@@ -145,15 +145,15 @@ package
 			tt_ph.visible = true;
 			addChild(tt_ph);
 			
-			tt_pa = new TextSprite();
-			tt_pa.color = 0xffffff;
-			tt_pa.alpha = 0.8;
-			tt_pa.size = tt_text_size;
-			tt_pa.font = "Calibri";
-			tt_pa.x = tt_ox;
-			tt_pa.y = tt_oy + tt_vert_spacing*4;
-			tt_pa.visible = true;
-			addChild(tt_pa);
+			tt_papn = new TextSprite();
+			tt_papn.color = 0xffffff;
+			tt_papn.alpha = 0.8;
+			tt_papn.size = tt_text_size;
+			tt_papn.font = "Calibri";
+			tt_papn.x = tt_ox;
+			tt_papn.y = tt_oy + tt_vert_spacing*4;
+			tt_papn.visible = true;
+			addChild(tt_papn);
 			
 			
 			urbanBorderCB = new CheckBox();
@@ -287,14 +287,14 @@ package
 				tt_category.text = mapObj.getCategory();
 				tt_pop.text = "Population: " + mapObj.getPop();
 				tt_ph.text = "PH: " + mapObj.getPh();
-				tt_pa.text = "PA: " + mapObj.getPa();
+				tt_papn.text = "PA+PN: " + mapObj.getPapn();
 			}
 			else{
 				tt_county.text = "";
 				tt_category.text = "Roll over a Utah ";
 				tt_pop.text = "county for physicians";
 				tt_ph.text = "data.";
-				tt_pa.text = "";
+				tt_papn.text = "";
 			}
 			
 		}
