@@ -127,18 +127,18 @@ package {
       		  dispatchEvent(new Event(Event.CHANGE));
 		      });
 		    
-		    newCircle.graphics.beginFill(0xE3FDFF, 1.0);
+		    newCircle.graphics.beginFill(0xeeeeee, 1.0);
 		    newCircle.graphics.drawCircle(-15, -4, 20);
 		    newCircle.graphics.drawCircle(-15, -4, 15);
 		    newCircle.graphics.endFill();
 		    
-		    newCircle.graphics.beginFill(0xE3FDFF, 0.3);
+		    newCircle.graphics.beginFill(0xeeeeee, 0.3);
 		    newCircle.graphics.drawCircle(-15, -4, 12);
 		    newCircle.graphics.endFill();
 		    
 		    // draw the bar to the right, but not for the last one
 		    if(i != YearArray.length - 1){
-  		    newCircle.graphics.beginFill(0xE3FDFF, 0.8);
+  		    newCircle.graphics.beginFill(0xeeeeee, 0.8);
   		    newCircle.graphics.drawRect(0, -8, 69, 8);
   		    newCircle.graphics.endFill();
 		    }

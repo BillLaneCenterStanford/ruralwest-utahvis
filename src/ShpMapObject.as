@@ -18,8 +18,8 @@ package
 		private var mapArray:Array = new Array();
 		private var mapBoundArray:Array = new Array(4);
 		
-		private var _ox:int = 0;
-		private var _oy:int = 50;
+		private var _ox:int = -2;
+		private var _oy:int = 53;
 		
 		private var _stage_width:int;
 		private var _stage_height:int;    

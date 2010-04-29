@@ -1,5 +1,7 @@
 package
 {
+	import fl.controls.CheckBox;
+	
 	import flare.display.TextSprite;
 	import flare.widgets.ProgressBar;
 	
@@ -32,6 +34,8 @@ package
 		private var tt_pop:TextSprite;
 		private var tt_ph:TextSprite;
 		private var tt_pa:TextSprite;
+		
+		private var urbanBorderCB:CheckBox = new CheckBox();
 
 		public function Utah()
 		{
@@ -41,7 +45,8 @@ package
 			blackBG.graphics.endFill();
 			addChild(blackBG); // !!!
 			
-			ZUI = new ZoomUI(0.3, 0.1, 10.0);
+			
+			ZUI = new ZoomUI(1.2, 0.1, 10.0);
 			this.addEventListener( MouseEvent.MOUSE_DOWN, onDrag);
 			ZUI.addEventListener(Event.CHANGE, ZUIHandler);
 			ZUI.addMapControl();
@@ -49,7 +54,7 @@ package
 			loadMap();
 			
 			var ctrlPanel : Sprite = new Sprite();
-			ctrlPanel.graphics.beginFill(0x000000, 0.6);  // !!!
+			ctrlPanel.graphics.beginFill(0x000000, 0.7);  // !!!
 			ctrlPanel.graphics.drawRect(610, 35, 195, 610);
 			ctrlPanel.graphics.endFill();
 			addChild(ctrlPanel);
@@ -57,6 +62,10 @@ package
 			var divider : Sprite = new Sprite();
 			divider.graphics.beginFill(0xeeeeee);
 			divider.graphics.drawRect(610, 35, 5, 610);
+			divider.graphics.endFill();
+			
+			divider.graphics.beginFill(0xeeeeee);
+			divider.graphics.drawRect(610, 450, 195, 5);
 			divider.graphics.endFill();
 			addChild(divider);
 			
@@ -82,14 +91,23 @@ package
 			addChild(year_display);
 			
 			
+			var tt_title:TextSprite = new TextSprite("Data Tooltips");
+			tt_title.color = 0xffffff;
+			tt_title.size = 20;
+			tt_title.font = "Calibri";
+			tt_title.x = 630;
+			tt_title.y = 470;
+			addChild(tt_title);
+			
 			// tooltip configurations
-			var tt_text_size:int = 16;
-			var tt_vert_spacing:int = 18;
-			var tt_ox:int = 630;
-			var tt_oy:int = 320;
+			var tt_text_size:int = 18;
+			var tt_vert_spacing:int = 22;
+			var tt_ox:int = 635;
+			var tt_oy:int = 500;
 			
 			tt_county = new TextSprite();
 			tt_county.color = 0xffffff;
+			tt_county.alpha = 0.8;
 			tt_county.size = tt_text_size;
 			tt_county.font = "Calibri";
 			tt_county.x = tt_ox;
@@ -97,8 +115,9 @@ package
 			tt_county.visible = true;
 			addChild(tt_county);
 			
-			tt_category = new TextSprite();
+			tt_category = new TextSprite("Roll over a Utah ");
 			tt_category.color = 0xffffff;
+			tt_category.alpha = 0.8;
 			tt_category.size = tt_text_size;
 			tt_category.font = "Calibri";
 			tt_category.x = tt_ox;
@@ -106,8 +125,9 @@ package
 			tt_category.visible = true;
 			addChild(tt_category);
 			
-			tt_pop = new TextSprite();
+			tt_pop = new TextSprite("county for physicians");
 			tt_pop.color = 0xffffff;
+			tt_pop.alpha = 0.8;
 			tt_pop.size = tt_text_size;
 			tt_pop.font = "Calibri";
 			tt_pop.x = tt_ox;
@@ -115,8 +135,9 @@ package
 			tt_pop.visible = true;
 			addChild(tt_pop);
 			
-			tt_ph = new TextSprite();
+			tt_ph = new TextSprite("data.");
 			tt_ph.color = 0xffffff;
+			tt_ph.alpha = 0.8;
 			tt_ph.size = tt_text_size;
 			tt_ph.font = "Calibri";
 			tt_ph.x = tt_ox;
@@ -126,14 +147,38 @@ package
 			
 			tt_pa = new TextSprite();
 			tt_pa.color = 0xffffff;
+			tt_pa.alpha = 0.8;
 			tt_pa.size = tt_text_size;
 			tt_pa.font = "Calibri";
 			tt_pa.x = tt_ox;
 			tt_pa.y = tt_oy + tt_vert_spacing*4;
 			tt_pa.visible = true;
 			addChild(tt_pa);
+			
+			
+			urbanBorderCB = new CheckBox();
+      urbanBorderCB.x = 630;
+      urbanBorderCB.y = 340;
+      urbanBorderCB.selected = false;
+      urbanBorderCB.label = "";
+      addChild(urbanBorderCB);
+      
+      urbanBorderCB.addEventListener(Event.CHANGE, CBUrbanHandler);
+      
+      var ub_label:TextSprite = new TextSprite("highlight urban \r   county borders");
+      ub_label.font = "Calibri";
+      ub_label.size = 16;
+      ub_label.color = 0xffffff;
+      ub_label.alpha = 0.8;
+      ub_label.x = 657;
+      ub_label.y = 335;
+      addChild(ub_label);
+			
 		}
 		
+		private function CBUrbanHandler(event:Event):void {
+		  
+		}
 		
 		private function loadMap():void
 		{
@@ -151,15 +196,16 @@ package
 			_bar.progress = 0.0;    
 			
 			// *********** Below code loads shp object ************ //
-			mapObj = new ShpMapObject(797, 611, mapContainer, _bar);
+			mapObj = new ShpMapObject(800, 610, mapContainer, _bar);
 			mapObj.addEventListener("all map loaded", allMapLoaded);
 			mapObj.addEventListener(Event.CHANGE, ttHandler);    // handles tooltips events
 			mapObj.showMode = "utah";
 			
 			mapObj.SetMapColor(0xff0000);
-			mapObj.SetMap(0, 0, 767, 611);
+			mapObj.SetMap(0, 0, 800, 610);
 			
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
+			//trace(ZUI.getImageLeft());
 			mapObj.addEventListener(Event.CHANGE, ttHandler);    // handles tooltips events
 			
 			//initTTGraphics();
@@ -176,6 +222,7 @@ package
 			mapObj.updateMapColor();
 			//single_selected = tl_single.getCurSelectedZone();
 			mapObj.SetMapEmbedSrc(3-1);  // hard code
+			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
 		}
 		
 		
@@ -236,7 +283,7 @@ package
 		{
 			var cnty:String = mapObj.getCounty();
 			if(cnty.length > 0){
-				tt_county.text = mapObj.getCounty();
+				tt_county.text = mapObj.getCounty().toUpperCase() + " county";
 				tt_category.text = mapObj.getCategory();
 				tt_pop.text = "Population: " + mapObj.getPop();
 				tt_ph.text = "PH: " + mapObj.getPh();
@@ -244,9 +291,9 @@ package
 			}
 			else{
 				tt_county.text = "";
-				tt_category.text = "";
-				tt_pop.text = "";
-				tt_ph.text = "";
+				tt_category.text = "Roll over a Utah ";
+				tt_pop.text = "county for physicians";
+				tt_ph.text = "data.";
 				tt_pa.text = "";
 			}
 			

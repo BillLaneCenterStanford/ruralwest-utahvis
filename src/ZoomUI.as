@@ -43,8 +43,8 @@ package
 			
 			frame_height = 540;
 			frame_width = 720;
-			image_left = 60;
-			image_top = 50;
+			image_left = -460;
+		  image_top = -620
 			
 			image_left2 = 46;
 			image_top2 = 4;
@@ -57,7 +57,7 @@ package
 			var COLOR_LABELS:uint = 0xffffff;
 			var ALPHA:Number = 0.4;
 			var ALPHA_LIGHT:Number = 0.4;
-			var drawX:Number = 728;
+			var drawX:Number = 711;
 			var drawY:Number = 120;
 			var offset:Number = 34;
 			var triW:Number = 30;      // width of triangles for arrows
@@ -281,13 +281,13 @@ package
 				function( evt:MouseEvent ):void 
 				{
 					// restore to default
-					image_left = 60;
-					image_top = 50;
+					image_left = -460;
+					image_top = -620;
 					
 					image_left2 = 46;
 					image_top2 = 4;
 					
-					scale_factor = 0.3;
+					scale_factor = 1.2;
 					dispatchEvent(new Event(Event.CHANGE));
 				}
 			);
@@ -295,8 +295,8 @@ package
 			Recenter.addEventListener(MouseEvent.MOUSE_OVER, showRecenterTT);
 			Recenter.addEventListener(MouseEvent.MOUSE_OUT, hideRecenterTT);
 			
-			RecenterTT.x = 718;
-			RecenterTT.y = 85;
+			RecenterTT.x = 678;
+			RecenterTT.y = 55;
 			RecenterTT.graphics.beginFill(0xFFF7B5, 0.6);
 			RecenterTT.graphics.drawRoundRect(0, 0, 80, 18, 4, 4);
 			RecenterTT.graphics.endFill();
