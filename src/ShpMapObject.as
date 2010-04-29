@@ -41,7 +41,7 @@ package
 		private var tt_category:String = "";
 		private var tt_pop:String = "";
 		private var tt_ph:String = "";
-		private var tt_pa:String = "";
+		private var tt_papn:String = "";
 		
 		
 		// "none", "percapita_physicians", "population", "density", "percent"
@@ -111,8 +111,10 @@ package
 					obj["fips"] = county["fips"].toString();
 					obj["category"] = county["category"].toString();
 					obj["ph"] = parseInt(county["ph"]);
-					obj["pa"] = parseInt(county["pa"]);
+					obj["papn"] = parseInt(county["papn"]);
 					obj["pop"] = parseInt(county["pop"]);
+					obj["change_ph"] = parseFloat(county["change_ph"]);
+					obj["change_papn"] = parseFloat(county["change_papn"]);
 					
 					censusData[county["fips"].toString()] = obj;
 					
@@ -148,7 +150,7 @@ package
 			tt_category = event.currentTarget.getCategory();
 			tt_pop = event.currentTarget.getPop();
 			tt_ph = event.currentTarget.getPh();
-			tt_pa = event.currentTarget.getPa();
+			tt_papn = event.currentTarget.getPapn();
 			
 			dispatchEvent(new Event(Event.CHANGE));
 		}
@@ -165,8 +167,8 @@ package
 		public function getPh():String{
 			return tt_ph;
 		}
-		public function getPa():String{
-			return tt_pa;
+		public function getPapn():String{
+			return tt_papn;
 		}
 		
 		// THE ABOVE WERE FOR TOOLTIPS
