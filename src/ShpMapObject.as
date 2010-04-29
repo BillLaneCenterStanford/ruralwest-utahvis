@@ -49,6 +49,8 @@ package
 		public var years:Array = new Array(1998, 2003, 2008);
 		
 		private var border:Boolean;  
+		private var highlight_urban:Boolean = false;
+
 		
 		public function ShpMapObject(width:int, height:int, mapContainer:Sprite, progressBar:ProgressBar = null)
 		{
@@ -217,6 +219,7 @@ package
 		public function updateMapColor():void {
 			for (var i:int = 0; i<3; i++) {
 				mapArray[i].getBorder(border);
+				mapArray[i].getHighlightUrban(highlight_urban);
 				mapArray[i].updateMapColor(showMode);
 			}
 		}
@@ -298,5 +301,9 @@ package
 		public function getBorder(inbool:Boolean):void{
 			border = inbool;
 		}
+		
+		public function getHighlightUrban (inbool:Boolean):void{
+      highlight_urban = inbool;
+    }
 	}
 }
