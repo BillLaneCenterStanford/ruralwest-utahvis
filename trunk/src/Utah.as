@@ -160,7 +160,7 @@ package
 			
 			urbanBorderCB = new CheckBox();
 			urbanBorderCB.x = 630;
-			urbanBorderCB.y = 340;
+			urbanBorderCB.y = 360;
 			urbanBorderCB.selected = false;
 			urbanBorderCB.label = "";
 			addChild(urbanBorderCB);
@@ -173,12 +173,12 @@ package
 			ub_label.color = 0xffffff;
 			ub_label.alpha = 0.8;
 			ub_label.x = 657;
-			ub_label.y = 335;
+			ub_label.y = 355;
 			addChild(ub_label);
 			
 			
 			// legend
-			myLegend = new LegendBar(635, 230, 20, 6, "utah");
+			myLegend = new LegendBar(635, 250, 20, 6, "utah");
 			addChild(myLegend);
 		}
 		
