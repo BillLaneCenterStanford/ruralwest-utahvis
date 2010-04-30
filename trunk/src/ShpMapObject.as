@@ -42,6 +42,8 @@ package
 		private var tt_pop:String = "";
 		private var tt_ph:String = "";
 		private var tt_papn:String = "";
+		private var tt_abs_change_ph:String = "";
+		private var tt_abs_change_papn:String = "";
 		
 		
 		// "none", "percapita_physicians", "population", "density", "percent"
@@ -117,6 +119,8 @@ package
 					obj["pop"] = parseInt(county["pop"]);
 					obj["change_ph"] = parseFloat(county["change_ph"]);
 					obj["change_papn"] = parseFloat(county["change_papn"]);
+					obj["abs_change_ph"] = parseInt(county["abs_change_ph"]);
+					obj["abs_change_papn"] = parseInt(county["abs_change_papn"]);
 					
 					censusData[county["fips"].toString()] = obj;
 					
@@ -153,10 +157,13 @@ package
 			tt_pop = event.currentTarget.getPop();
 			tt_ph = event.currentTarget.getPh();
 			tt_papn = event.currentTarget.getPapn();
+			tt_abs_change_ph = event.currentTarget.getAbsChangePh();
+			tt_abs_change_papn = event.currentTarget.getAbsChangePapn();
 			
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
+
 		public function getCounty():String{
 			return tt_county;
 		}
@@ -171,6 +178,12 @@ package
 		}
 		public function getPapn():String{
 			return tt_papn;
+		}
+		public function getAbsChangePh():String {
+			return tt_abs_change_ph;
+		}
+		public function getAbsChangePapn():String {
+			return tt_abs_change_papn;
 		}
 		
 		// THE ABOVE WERE FOR TOOLTIPS

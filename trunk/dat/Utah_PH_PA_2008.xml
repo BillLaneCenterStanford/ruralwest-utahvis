@@ -19,11 +19,17 @@
       <pop>
         6285
       </pop>
+      <abs_change_ph>
+        3
+      </abs_change_ph>
+      <abs_change_papn>
+        -3
+      </abs_change_papn>
       <change_ph>
-        -1.588141874
+        0.412623576
       </change_ph>
       <change_papn>
-        0.119970025
+        -0.473574095
       </change_papn>
     </county>
     <county>
@@ -45,11 +51,17 @@
       <pop>
         44022
       </pop>
+      <abs_change_ph>
+        0
+      </abs_change_ph>
+      <abs_change_papn>
+        -5
+      </abs_change_papn>
       <change_ph>
-        -0.354716525
+        -0.04129221
       </change_ph>
       <change_papn>
-        0.117430093
+        -0.128038117
       </change_papn>
     </county>
     <county>
@@ -71,11 +83,17 @@
       <pop>
         98176
       </pop>
+      <abs_change_ph>
+        -22
+      </abs_change_ph>
+      <abs_change_papn>
+        14
+      </abs_change_papn>
       <change_ph>
-        -0.266249186
+        -0.354716525
       </change_ph>
       <change_papn>
-        0.03681883
+        0.117430093
       </change_papn>
     </county>
     <county>
@@ -97,11 +115,17 @@
       <pop>
         19558
       </pop>
+      <abs_change_ph>
+        17
+      </abs_change_ph>
+      <abs_change_papn>
+        -1
+      </abs_change_papn>
       <change_ph>
-        -0.176532188
+        0.931010213
       </change_ph>
       <change_papn>
-        -0.063233952
+        -0.016335625
       </change_papn>
     </county>
     <county>
@@ -123,11 +147,17 @@
       <pop>
         921
       </pop>
+      <abs_change_ph>
+        0
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        -0.04129221
+        0
       </change_ph>
       <change_papn>
-        -0.128038117
+        0
       </change_papn>
     </county>
     <county>
@@ -149,11 +179,17 @@
       <pop>
         262038
       </pop>
+      <abs_change_ph>
+        61
+      </abs_change_ph>
+      <abs_change_papn>
+        16
+      </abs_change_papn>
       <change_ph>
-        0
+        0.121679108
       </change_ph>
       <change_papn>
-        0
+        0.028699603
       </change_papn>
     </county>
     <county>
@@ -175,11 +211,17 @@
       <pop>
         14698
       </pop>
+      <abs_change_ph>
+        2
+      </abs_change_ph>
+      <abs_change_papn>
+        -1
+      </abs_change_papn>
       <change_ph>
-        0
+        0.08356627
       </change_ph>
       <change_papn>
-        0
+        -0.052088901
       </change_papn>
     </county>
     <county>
@@ -201,11 +243,17 @@
       <pop>
         10477
       </pop>
+      <abs_change_ph>
+        -3
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.016994739
+        -0.266249186
       </change_ph>
       <change_papn>
-        -0.031121468
+        0.03681883
       </change_papn>
     </county>
     <county>
@@ -227,11 +275,17 @@
       <pop>
         4532
       </pop>
+      <abs_change_ph>
+        4
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.030294182
+        0.882612533
       </change_ph>
       <change_papn>
-        0.203374117
+        0.042653714
       </change_papn>
     </county>
     <county>
@@ -253,11 +307,17 @@
       <pop>
         8464
       </pop>
+      <abs_change_ph>
+        7
+      </abs_change_ph>
+      <abs_change_papn>
+        2
+      </abs_change_papn>
       <change_ph>
-        0.06954129
+        0.800093307
       </change_ph>
       <change_papn>
-        -0.146260583
+        0.196581237
       </change_papn>
     </county>
     <county>
@@ -279,11 +339,17 @@
       <pop>
         37559
       </pop>
+      <abs_change_ph>
+        12
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.08356627
+        0.215885291
       </change_ph>
       <change_papn>
-        -0.052088901
+        -0.07235443
       </change_papn>
     </county>
     <county>
@@ -305,11 +371,17 @@
       <pop>
         8713
       </pop>
+      <abs_change_ph>
+        2
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.087611051
+        0.122952355
       </change_ph>
       <change_papn>
-        -0.189393018
+        -0.030769307
       </change_papn>
     </county>
     <county>
@@ -331,11 +403,17 @@
       <pop>
         5937
       </pop>
+      <abs_change_ph>
+        4
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.121203904
+        0.677943423
       </change_ph>
       <change_papn>
-        0.079343377
+        0.010366861
       </change_papn>
     </county>
     <county>
@@ -357,11 +435,17 @@
       <pop>
         13068
       </pop>
+      <abs_change_ph>
+        1
+      </abs_change_ph>
+      <abs_change_papn>
+        3
+      </abs_change_papn>
       <change_ph>
-        0.122952355
+        0.030294182
       </change_ph>
       <change_papn>
-        -0.030769307
+        0.203374117
       </change_papn>
     </county>
     <county>
@@ -383,11 +467,17 @@
       <pop>
         7938
       </pop>
+      <abs_change_ph>
+        1
+      </abs_change_ph>
+      <abs_change_papn>
+        -1
+      </abs_change_papn>
       <change_ph>
-        0.215885291
+        0.087611051
       </change_ph>
       <change_papn>
-        -0.07235443
+        -0.189393018
       </change_papn>
     </county>
     <county>
@@ -409,11 +499,17 @@
       <pop>
         1358
       </pop>
+      <abs_change_ph>
+        0
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.348712173
+        0
       </change_ph>
       <change_papn>
-        -0.10064832
+        0
       </change_papn>
     </county>
     <county>
@@ -435,11 +531,17 @@
       <pop>
         2079
       </pop>
+      <abs_change_ph>
+        -3
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.35624588
+        -1.588141874
       </change_ph>
       <change_papn>
-        0.274035662
+        0.119970025
       </change_papn>
     </county>
     <county>
@@ -461,11 +563,17 @@
       <pop>
         940465
       </pop>
+      <abs_change_ph>
+        503
+      </abs_change_ph>
+      <abs_change_papn>
+        121
+      </abs_change_papn>
       <change_ph>
-        0.402090873
+        0.374331701
       </change_ph>
       <change_papn>
-        1.60836349
+        0.084715791
       </change_papn>
     </county>
     <county>
@@ -487,11 +595,17 @@
       <pop>
         14240
       </pop>
+      <abs_change_ph>
+        5
+      </abs_change_ph>
+      <abs_change_papn>
+        4
+      </abs_change_papn>
       <change_ph>
-        0.412623576
+        0.35624588
       </change_ph>
       <change_papn>
-        -0.473574095
+        0.274035662
       </change_papn>
     </county>
     <county>
@@ -513,11 +627,17 @@
       <pop>
         24787
       </pop>
+      <abs_change_ph>
+        10
+      </abs_change_ph>
+      <abs_change_papn>
+        -2
+      </abs_change_papn>
       <change_ph>
-        0.430188791
+        0.348712173
       </change_ph>
       <change_papn>
-        0.051211631
+        -0.10064832
       </change_papn>
     </county>
     <county>
@@ -539,11 +659,17 @@
       <pop>
         19318
       </pop>
+      <abs_change_ph>
+        1
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.677943423
+        0.016994739
       </change_ph>
       <change_papn>
-        0.010366861
+        -0.031121468
       </change_papn>
     </county>
     <county>
@@ -565,11 +691,17 @@
       <pop>
         34073
       </pop>
+      <abs_change_ph>
+        10
+      </abs_change_ph>
+      <abs_change_papn>
+        0
+      </abs_change_papn>
       <change_ph>
-        0.756143667
+        0.06954129
       </change_ph>
       <change_papn>
-        0.472082832
+        -0.146260583
       </change_papn>
     </county>
     <county>
@@ -591,11 +723,17 @@
       <pop>
         48956
       </pop>
+      <abs_change_ph>
+        26
+      </abs_change_ph>
+      <abs_change_papn>
+        7
+      </abs_change_papn>
       <change_ph>
-        0.800093307
+        0.430188791
       </change_ph>
       <change_papn>
-        0.196581237
+        0.051211631
       </change_papn>
     </county>
     <county>
@@ -617,11 +755,17 @@
       <pop>
         26019
       </pop>
+      <abs_change_ph>
+        -3
+      </abs_change_ph>
+      <abs_change_papn>
+        -1
+      </abs_change_papn>
       <change_ph>
-        0.882612533
+        -0.176532188
       </change_ph>
       <change_papn>
-        0.042653714
+        -0.063233952
       </change_papn>
     </county>
     <county>
@@ -643,11 +787,17 @@
       <pop>
         423286
       </pop>
+      <abs_change_ph>
+        129
+      </abs_change_ph>
+      <abs_change_papn>
+        11
+      </abs_change_papn>
       <change_ph>
-        0.931010213
+        0.101010008
       </change_ph>
       <change_papn>
-        -0.016335625
+        -0.039528388
       </change_papn>
     </county>
     <county>
@@ -669,11 +819,17 @@
       <pop>
         18515
       </pop>
+      <abs_change_ph>
+        14
+      </abs_change_ph>
+      <abs_change_papn>
+        9
+      </abs_change_papn>
       <change_ph>
-        0.101010008
+        0.756143667
       </change_ph>
       <change_papn>
-        -0.039528388
+        0.472082832
       </change_papn>
     </county>
     <county>
@@ -695,11 +851,17 @@
       <pop>
         109767
       </pop>
+      <abs_change_ph>
+        41
+      </abs_change_ph>
+      <abs_change_papn>
+        17
+      </abs_change_papn>
       <change_ph>
-        0.121679108
+        0.121203904
       </change_ph>
       <change_papn>
-        0.028699603
+        0.079343377
       </change_papn>
     </county>
     <county>
@@ -721,11 +883,17 @@
       <pop>
         2487
       </pop>
+      <abs_change_ph>
+        1
+      </abs_change_ph>
+      <abs_change_papn>
+        4
+      </abs_change_papn>
       <change_ph>
-        0.29202568
+        0.402090873
       </change_ph>
       <change_papn>
-        0.011158375
+        1.60836349
       </change_papn>
     </county>
     <county>
@@ -747,11 +915,17 @@
       <pop>
         205882
       </pop>
+      <abs_change_ph>
+        87
+      </abs_change_ph>
+      <abs_change_papn>
+        8
+      </abs_change_papn>
       <change_ph>
-        0.374331701
+        0.29202568
       </change_ph>
       <change_papn>
-        0.084715791
+        0.011158375
       </change_papn>
     </county>
   </records>
