@@ -333,8 +333,17 @@ package
 				tt_county.text = mapObj.getCounty().toUpperCase() + " county";
 				tt_category.text = mapObj.getCategory();
 				tt_pop.text = "Population: " + mapObj.getPop();
-				tt_ph.text = "PH: " + mapObj.getPh();
-				tt_papn.text = "PA+PN: " + mapObj.getPapn();
+				
+				var abs_change_ph:String = mapObj.getAbsChangePh();
+				if (parseInt(abs_change_ph) >= 0) {
+					abs_change_ph = "+" + abs_change_ph;
+				}
+				var abs_change_papn:String = mapObj.getAbsChangePapn();
+				if (parseInt(abs_change_papn) >= 0) {
+					abs_change_papn = "+" + abs_change_papn;
+				}
+				tt_ph.text = "PH: " + mapObj.getPh() + " (" + abs_change_ph + " from 1998)";
+				tt_papn.text = "PA+PN: " + mapObj.getPapn() + " (" + abs_change_papn + " from 1998)";
 			}
 			else{
 				tt_county.text = "";
