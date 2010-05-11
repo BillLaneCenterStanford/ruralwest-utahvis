@@ -1,4 +1,4 @@
-package com.cartogrammar.shp
+package
 {
 	import flash.geom.Point;
 	
@@ -20,8 +20,8 @@ package com.cartogrammar.shp
 			var shpPoint : ShpPoint = record.shape as ShpPoint;
 			geometry = new Point( shpPoint.x, shpPoint.y );
 			/* 	If a different map projection were desired, then here
-				we could run the point through a transformation formula. */
-				
+			we could run the point through a transformation formula. */
+			
 			draw();
 		}
 		
