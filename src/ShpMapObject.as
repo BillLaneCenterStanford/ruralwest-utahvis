@@ -11,9 +11,6 @@ package
 	
 	public class ShpMapObject extends Sprite
 	{
-		
-		private var scalef:Number;
-		
 		private var BGColor:uint;
 		private var mapArray:Array = new Array();
 		private var mapBoundArray:Array = new Array(4);
@@ -28,11 +25,8 @@ package
 		
 		private var loaderArray:Array = new Array();
 		private var countLoadedXML:Number = 0;
-		//private var loader:URLLoader = new URLLoader();
 		
 		private var xmlCountyData:XML;
-		//private var dictCountyPopArray:Array = new Array();
-		//private var dictChangePopArray:Array = new Array();
 		
 		private var mapLoadedCount:Number = 0;
 		private var _bar:ProgressBar;
@@ -52,7 +46,7 @@ package
 		
 		private var border:Boolean;  
 		private var highlight_urban:Boolean = false;
-
+		
 		
 		public function ShpMapObject(width:int, height:int, mapContainer:Sprite, progressBar:ProgressBar = null)
 		{
@@ -62,18 +56,6 @@ package
 			_container = mapContainer;
 			_bar = progressBar;
 			
-			/*
-			TODO: this is original code, to be removed
-			var i:int, year:int;
-			for (i=0; i<17; i++) {
-			year = 1850 + i*10;
-			var loader:URLLoader = new URLLoader();
-			loader.load(new URLRequest("../dat/census" + year.toString() + ".xml"));
-			loader.addEventListener(Event.COMPLETE, xmlLoadComplete);
-			loaderArray.push(loader);
-			}
-			*/
-
 			var i:int, year:int;
 			for (i = 0; i < years.length; i++) {
 				year = years[i];
@@ -99,18 +81,11 @@ package
 			var i:int;
 			for (i=0; i < years.length ; i++) {
 				var censusData:Dictionary = new Dictionary();
-
+				
 				xmlCountyData = new XML(loaderArray[i].data);
 				for each (var county:Object in xmlCountyData.county) {
 					var obj:Object = new Object;
-
-					/*
-					obj["fips"] = county["fips"].toString();
-					obj["countyname"] = county["countyname"].toString();
-					obj["numPhys"] = parseInt(county["numPhys"]);
-					obj["numPop"] = parseInt(county["numPop"]);
-					obj["state"] = county["state"].toString();
-					*/
+					
 					obj["countyname"] = county["countyname"].toString();
 					obj["fips"] = county["fips"].toString();
 					obj["category"] = county["category"].toString();
@@ -127,7 +102,18 @@ package
 				}
 				
 				var year:Number = this.years[i];
-				var elem:ShpMapElement = new ShpMapElement(year, censusData);
+				
+				/*
+				 * CODE FOR READING SHAPE FILES
+				 */
+				// if using shp files on server //
+//				super("http://ruralwest.stanford.edu/GIS/us"+year.toString()+".shp",
+//				"http://ruralwest.stanford.edu/GIS/US"+year.toString()+".DBF",
+//				censusData);
+				
+				// if using shp files on local //
+				var elem:ShpMap = new ShpMap("../shp/us.SHP", "../shp/us.DBF", censusData);
+				
 				elem.addEventListener(Event.CHANGE, countyChangeHandler);
 				
 				elem.visible = false;
@@ -163,7 +149,7 @@ package
 			dispatchEvent(new Event(Event.CHANGE));
 		}
 		
-
+		
 		public function getCounty():String{
 			return tt_county;
 		}
@@ -185,7 +171,6 @@ package
 		public function getAbsChangePapn():String {
 			return tt_abs_change_papn;
 		}
-		
 		// THE ABOVE WERE FOR TOOLTIPS
 		
 		// Need to wait for the map to finish loading/drawing before it can be resized correctly.
@@ -199,21 +184,8 @@ package
 			map.scaleX = map.scaleY = 0.3;
 			map.x = 60;
 			map.y = 50;
-			//image_left = 90;
-			//  image_top = -70;
-			
-			// just for fun, add a marker to somewhere around my house!
-			///addMarkerAt( 42.36,-71.11 );
 		}
 		
-		public function getShpScale():Number
-		{
-			//var elem:ShpMapElement = mapArray[0];
-			//scalef = elem.scaleX;
-			return scalef;
-		}
-		
-		// To demonstrate retrieving a particular feature and doing something to it. This colors Wisconsin green.
 		private function onAttributesLoaded(event:Event):void
 		{
 			trace("$onAttributedsLoaded$")
@@ -274,7 +246,7 @@ package
 		
 		public function ScaleAndTranslateMap(sc:Number, sx:int, sy:int):void
 		{
-			var obj:ShpMapElement;
+			var obj:ShpMap;
 			for each(obj in mapArray){
 				obj.scaleX = sc;
 				obj.scaleY = sc;
@@ -316,7 +288,7 @@ package
 		}
 		
 		public function getHighlightUrban (inbool:Boolean):void{
-      highlight_urban = inbool;
-    }
+			highlight_urban = inbool;
+		}
 	}
 }

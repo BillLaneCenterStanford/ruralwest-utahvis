@@ -222,9 +222,8 @@ package
 		}
 		
 		private function CBUrbanHandler(event:Event):void {
-		  mapObj.getHighlightUrban(urbanBorderCB.selected);
-      mapObj.updateMapColor();
-
+			mapObj.getHighlightUrban(urbanBorderCB.selected);
+			mapObj.updateMapColor();
 		}
 		
 		private function loadMap():void

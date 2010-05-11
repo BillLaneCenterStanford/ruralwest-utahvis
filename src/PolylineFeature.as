@@ -1,10 +1,10 @@
-package com.cartogrammar.shp
+package
 {
 	import org.vanrijkom.shp.ShpPolyline;
 	import org.vanrijkom.shp.ShpRecord;
 	
 	import flash.geom.Rectangle;
-
+	
 	/**
 	 * A display object for a single polyline feature.
 	 * @author Andy Woodruff
@@ -23,8 +23,8 @@ package com.cartogrammar.shp
 			super();
 			geometry = (record.shape as ShpPolyline).rings;
 			/* 	If a different map projection were desired, then here
-				we could run each point in geometry through a
-				transformation formula. */
+			we could run each point in geometry through a
+			transformation formula. */
 			
 			draw();
 		}
