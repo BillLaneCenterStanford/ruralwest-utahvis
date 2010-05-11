@@ -26,29 +26,21 @@ package
 		private var loaderArray:Array = new Array();
 		private var countLoadedXML:Number = 0;
 		
-		private var xmlCountyData:XML;
+		private var xmlData:XML;
 		
 		private var mapLoadedCount:Number = 0;
 		private var _bar:ProgressBar;
 		
-		private var tt_county:String = "";
-		private var tt_category:String = "";
-		private var tt_pop:String = "";
-		private var tt_ph:String = "";
-		private var tt_papn:String = "";
-		private var tt_abs_change_ph:String = "";
-		private var tt_abs_change_papn:String = "";
+		// data interface, used to shift among different data sets
+		private var dataInterface:DataInterface;
 		
-		
-		// "none", "percapita_physicians", "population", "density", "percent"
-		public var showMode:String = "utah";
-		public var years:Array = new Array(1998, 2003, 2008);
+		public var years:Array;
 		
 		private var border:Boolean;  
 		private var highlight_urban:Boolean = false;
 		
 		
-		public function ShpMapObject(width:int, height:int, mapContainer:Sprite, progressBar:ProgressBar = null)
+		public function ShpMapObject(width:int, height:int, mapContainer:Sprite, inputDataInterface:DataInterface, progressBar:ProgressBar = null)
 		{
 			BGColor = 0x000000;
 			_stage_width = width;
@@ -56,11 +48,15 @@ package
 			_container = mapContainer;
 			_bar = progressBar;
 			
+			this.dataInterface = inputDataInterface;
+
+			this.years = dataInterface.getYears();
+			
 			var i:int, year:int;
 			for (i = 0; i < years.length; i++) {
 				year = years[i];
 				var loader:URLLoader = new URLLoader();
-				loader.load(new URLRequest("../dat/Utah_PH_PA_" + year.toString() + ".xml"));
+				loader.load(new URLRequest(dataInterface.getXmlFileName(year.toString())));
 				loader.addEventListener(Event.COMPLETE, xmlLoadComplete);
 				loaderArray.push(loader);
 			}
@@ -77,42 +73,37 @@ package
 		}
 		
 		private function loadShpMaps():void {
-			trace('$utah data loaded$');
 			var i:int;
 			for (i=0; i < years.length ; i++) {
-				var censusData:Dictionary = new Dictionary();
+				var year:String = this.years[i];
 				
-				xmlCountyData = new XML(loaderArray[i].data);
-				for each (var county:Object in xmlCountyData.county) {
+				var dictData:Dictionary = new Dictionary();
+				
+				xmlData = new XML(loaderArray[i].data);
+				for each (var area:Object in xmlData.area) {
 					var obj:Object = new Object;
 					
-					obj["countyname"] = county["countyname"].toString();
-					obj["fips"] = county["fips"].toString();
-					obj["category"] = county["category"].toString();
-					obj["ph"] = parseInt(county["ph"]);
-					obj["papn"] = parseInt(county["papn"]);
-					obj["pop"] = parseInt(county["pop"]);
-					obj["change_ph"] = parseFloat(county["change_ph"]);
-					obj["change_papn"] = parseFloat(county["change_papn"]);
-					obj["abs_change_ph"] = parseInt(county["abs_change_ph"]);
-					obj["abs_change_papn"] = parseInt(county["abs_change_papn"]);
+					// loop through attributes and add to data obj
+					var arrayAttr:Array = dataInterface.getDataAttributes();
+					for each (var attr:String in arrayAttr) {
+						obj[attr] = area[attr].toString();
+					}
 					
-					censusData[county["fips"].toString()] = obj;
-					
+					// use identifying key attribute to index into dictionary of data
+					dictData[area[dataInterface.getKeyAttribute()].toString()] = obj;					
 				}
-				
-				var year:Number = this.years[i];
 				
 				/*
 				 * CODE FOR READING SHAPE FILES
 				 */
-				// if using shp files on server //
-//				super("http://ruralwest.stanford.edu/GIS/us"+year.toString()+".shp",
-//				"http://ruralwest.stanford.edu/GIS/US"+year.toString()+".DBF",
-//				censusData);
+				// if using shp files on server
+				// super("http://ruralwest.stanford.edu/GIS/us"+year.toString()+".shp", "http://ruralwest.stanford.edu/GIS/US"+year.toString()+".DBF", dictData);
 				
-				// if using shp files on local //
-				var elem:ShpMap = new ShpMap("../shp/us.SHP", "../shp/us.DBF", censusData);
+				// if using shp files on local
+				var elem:ShpMap = new ShpMap(
+					dataInterface.getShpFileName(year.toString()), 
+					dataInterface.getDbfFileName(year.toString()),
+					dictData, dataInterface);
 				
 				elem.addEventListener(Event.CHANGE, countyChangeHandler);
 				
@@ -135,43 +126,11 @@ package
 			
 		}
 		
-		// THESE ARE FOR TOOL TIPS:
+		// FOR TOOL TIPS:
 		private function countyChangeHandler(event:Event):void
 		{
-			tt_county = event.currentTarget.getCounty();
-			tt_category = event.currentTarget.getCategory();
-			tt_pop = event.currentTarget.getPop();
-			tt_ph = event.currentTarget.getPh();
-			tt_papn = event.currentTarget.getPapn();
-			tt_abs_change_ph = event.currentTarget.getAbsChangePh();
-			tt_abs_change_papn = event.currentTarget.getAbsChangePapn();
-			
 			dispatchEvent(new Event(Event.CHANGE));
 		}
-		
-		
-		public function getCounty():String{
-			return tt_county;
-		}
-		public function getCategory():String{
-			return tt_category;
-		}
-		public function getPop():String{
-			return tt_pop;
-		}
-		public function getPh():String{
-			return tt_ph;
-		}
-		public function getPapn():String{
-			return tt_papn;
-		}
-		public function getAbsChangePh():String {
-			return tt_abs_change_ph;
-		}
-		public function getAbsChangePapn():String {
-			return tt_abs_change_papn;
-		}
-		// THE ABOVE WERE FOR TOOLTIPS
 		
 		// Need to wait for the map to finish loading/drawing before it can be resized correctly.
 		//private var onMapLoaded:Function = function(event:Event):void
@@ -202,10 +161,10 @@ package
 		}
 		
 		public function updateMapColor():void {
-			for (var i:int = 0; i<3; i++) {
-				mapArray[i].getBorder(border);
-				mapArray[i].getHighlightUrban(highlight_urban);
-				mapArray[i].updateMapColor(showMode);
+			for (var i:int = 0; i < this.mapArray.length; i++) {
+				mapArray[i].setBorder(border);
+				mapArray[i].setHighlightUrban(highlight_urban);
+				mapArray[i].updateMapColor();
 			}
 		}
 		

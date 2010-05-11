@@ -27,7 +27,7 @@ for line in open(fi):
         continue
 
     # create a user data node
-    user = doc.createElement('county')
+    user = doc.createElement('area')
 
     [countyname, fips, category, ph, papn, pop, abs_change_ph, abs_change_papn, change_ph, change_papn] =\
         line.strip().split('\t')
