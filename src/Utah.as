@@ -16,7 +16,7 @@ package
 	{
 		
 		// the map object for the SVG map and frame
-		private var mapObj:Object;
+		private var mapObj:ShpMapObject;
 		
 		private var blackBG:Sprite;
 		
@@ -24,20 +24,21 @@ package
 		
 		private var tl:timeline;
 		private var this_year:int;
-		private var year_display:TextSprite;
+		private var title:TextSprite;
 		
 		private var _bar: ProgressBar;
-		
-		// tooltip text sprites
-		private var tt_county:TextSprite;
-		private var tt_category:TextSprite;
-		private var tt_pop:TextSprite;
-		private var tt_ph:TextSprite;
-		private var tt_papn:TextSprite;
 		
 		private var urbanBorderCB:CheckBox = new CheckBox();
 		
 		private var myLegend:LegendBar;
+		
+		//
+		// project specific data interface
+		//
+		private var dataInterface:DataInterface = new DataUtahByCounty();
+		//
+		//
+		//
 		
 		public function Utah()
 		{
@@ -87,90 +88,28 @@ package
 			tl.addEventListener(Event.CHANGE, tlHandler);
 			//addChild(tl);
 			
-			year_display = new TextSprite();
-			year_display.x = 10;
-			year_display.y = 5;
-			year_display.color = 0x333333;
-			year_display.font = "Calibri";
-			year_display.text = "Relative change in physicians and allied health professional per capita in Utah, 1998-2003";
-			year_display.size = 19;
-			year_display.bold = true;
-			addChild(year_display);
+			title = new TextSprite();
+			title.x = 10;
+			title.y = 5;
+			title.color = 0x333333;
+			title.font = "Calibri";
+			title.text = "Relative change in physicians and allied health professional per capita in Utah, 1998-2003";
+			title.size = 19;
+			title.bold = true;
+			addChild(title);
 			
 			
-			var tt_title:TextSprite = new TextSprite("Data tooltips");
-			tt_title.color = 0xffffff;
-			tt_title.size = 18;
-			tt_title.font = "Calibri";
-			tt_title.x = 630;
-			tt_title.y = 515;
-			addChild(tt_title);
+			// TOOLTIP
+			this.dataInterface.drawTooltip(this);
 			
-			// tooltip configurations
-			var tt_text_size:int = 16;
-			var tt_vert_spacing:int = 18;
-			var tt_ox:int = 635;
-			var tt_oy:int = 542;
-			
-			tt_county = new TextSprite();
-			tt_county.color = 0xffffff;
-			tt_county.alpha = 0.8;
-			tt_county.size = tt_text_size;
-			tt_county.font = "Calibri";
-			tt_county.x = tt_ox;
-			tt_county.y = tt_oy;
-			tt_county.visible = true;
-			addChild(tt_county);
-			
-			tt_category = new TextSprite("Roll over a Utah ");
-			tt_category.color = 0xffffff;
-			tt_category.alpha = 0.8;
-			tt_category.size = tt_text_size;
-			tt_category.font = "Calibri";
-			tt_category.x = tt_ox;
-			tt_category.y = tt_oy + tt_vert_spacing*1;
-			tt_category.visible = true;
-			addChild(tt_category);
-			
-			tt_pop = new TextSprite("county for physicians");
-			tt_pop.color = 0xffffff;
-			tt_pop.alpha = 0.8;
-			tt_pop.size = tt_text_size;
-			tt_pop.font = "Calibri";
-			tt_pop.x = tt_ox;
-			tt_pop.y = tt_oy + tt_vert_spacing*2;
-			tt_pop.visible = true;
-			addChild(tt_pop);
-			
-			tt_ph = new TextSprite("data.");
-			tt_ph.color = 0xffffff;
-			tt_ph.alpha = 0.8;
-			tt_ph.size = tt_text_size;
-			tt_ph.font = "Calibri";
-			tt_ph.x = tt_ox;
-			tt_ph.y = tt_oy + tt_vert_spacing*3;
-			tt_ph.visible = true;
-			addChild(tt_ph);
-			
-			tt_papn = new TextSprite();
-			tt_papn.color = 0xffffff;
-			tt_papn.alpha = 0.8;
-			tt_papn.size = tt_text_size;
-			tt_papn.font = "Calibri";
-			tt_papn.x = tt_ox;
-			tt_papn.y = tt_oy + tt_vert_spacing*4;
-			tt_papn.visible = true;
-			addChild(tt_papn);
-			
-			
+			// HIGHLIGHT URBAN CHECK BOX
 			urbanBorderCB = new CheckBox();
 			urbanBorderCB.x = 630;
 			urbanBorderCB.y = 220;
 			urbanBorderCB.selected = false;
 			urbanBorderCB.label = "";
-			addChild(urbanBorderCB);
-			
 			urbanBorderCB.addEventListener(Event.CHANGE, CBUrbanHandler);
+			addChild(urbanBorderCB);
 			
 			var ub_label:TextSprite = new TextSprite("highlight urban \r   county borders");
 			ub_label.font = "Calibri";
@@ -181,6 +120,7 @@ package
 			ub_label.y = 215;
 			addChild(ub_label);
 			
+			// LEGEND
 			var ltitle:TextSprite = new TextSprite("Legend");
 			ltitle.color = 0xffffff;
 			ltitle.alpha = 1.0;
@@ -190,7 +130,7 @@ package
 			ltitle.y = 295;
 			addChild(ltitle);
 			
-			var lph:TextSprite = new TextSprite("PH = Practicing Physicians");
+			var lph:TextSprite = new TextSprite("MD = Practicing Physicians");
 			lph.color = 0xffffff;
 			lph.alpha = 0.7;
 			lph.size = 12;
@@ -216,8 +156,8 @@ package
 			lpn.x = 635;
 			lpn.y = 350;
 			addChild(lpn);
-			// legend
-			myLegend = new LegendBar(640, 375, 30, 6, "utah");
+			
+			myLegend = new LegendBar(640, 375, 30, 6, dataInterface);
 			addChild(myLegend);
 		}
 		
@@ -228,7 +168,6 @@ package
 		
 		private function loadMap():void
 		{
-			
 			var mapContainer : Sprite = new Sprite();
 			mapContainer.graphics.beginFill(0x555555);
 			mapContainer.graphics.drawRect(5 ,35, 800, 610);
@@ -242,17 +181,14 @@ package
 			_bar.progress = 0.0;    
 			
 			// *********** Below code loads shp object ************ //
-			mapObj = new ShpMapObject(800, 610, mapContainer, _bar);
+			mapObj = new ShpMapObject(800, 610, mapContainer, this.dataInterface, _bar);
 			mapObj.addEventListener("all map loaded", allMapLoaded);
 			mapObj.addEventListener(Event.CHANGE, ttHandler);    // handles tooltips events
-			mapObj.showMode = "utah";
 			
 			mapObj.SetMapColor(0xff0000);
 			mapObj.SetMap(0, 0, 800, 610);
 			
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
-			//trace(ZUI.getImageLeft());
-			mapObj.addEventListener(Event.CHANGE, ttHandler);    // handles tooltips events
 			
 			//initTTGraphics();
 			
@@ -266,8 +202,7 @@ package
 				//DO NOTHING
 			}
 			mapObj.updateMapColor();
-			//single_selected = tl_single.getCurSelectedZone();
-			mapObj.SetMapEmbedSrc(3-1);  // hard code
+			mapObj.SetMapEmbedSrc(this.dataInterface.getDefaultMapIndex());
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
 		}
 		
@@ -318,47 +253,20 @@ package
 		
 		private function ZUIHandler(event:Event):void
 		{
-			//RescaleDots();
-			//RescaleMap();
 			// do rescale functions here
-			
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
 		}
 		
 		private function ttHandler(event:Event):void
 		{
-			var cnty:String = mapObj.getCounty();
-			if(cnty.length > 0){
-				tt_county.text = mapObj.getCounty().toUpperCase() + " county";
-				tt_category.text = mapObj.getCategory();
-				tt_pop.text = "Population: " + mapObj.getPop();
-				
-				var abs_change_ph:String = mapObj.getAbsChangePh();
-				if (parseInt(abs_change_ph) >= 0) {
-					abs_change_ph = "+" + abs_change_ph;
-				}
-				var abs_change_papn:String = mapObj.getAbsChangePapn();
-				if (parseInt(abs_change_papn) >= 0) {
-					abs_change_papn = "+" + abs_change_papn;
-				}
-				tt_ph.text = "PH: " + mapObj.getPh() + " (" + abs_change_ph + " from 1998)";
-				tt_papn.text = "PA+PN: " + mapObj.getPapn() + " (" + abs_change_papn + " from 1998)";
-			}
-			else{
-				tt_county.text = "";
-				tt_category.text = "Roll over a Utah ";
-				tt_pop.text = "county for physicians";
-				tt_ph.text = "data.";
-				tt_papn.text = "";
-			}
-			
+			dataInterface.handleTooltip(mapObj, event);
 		}
 		
 		private function tlHandler(evt:Event):void
 		{
 			trace("tlHandler " + tl.getSelectedZone() + ", year " + tl.getSelectedYear());
 			this_year = tl.getSelectedYear();
-			year_display.text = "Relative change in physicians and allied health professional per capita in Utah, 1998-2003";
+			title.text = "Relative change in physicians and allied health professional per capita in Utah, 1998-2003";
 			mapObj.SetMapEmbedSrc(tl.getSelectedZone());
 		}
 		
