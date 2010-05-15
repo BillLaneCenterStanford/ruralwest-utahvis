@@ -35,7 +35,8 @@ package
 		//
 		// project specific data interface
 		//
-		private var dataInterface:DataInterface = new DataUtahByCounty();
+		//private var dataInterface:DataInterface = new DataUtahByCounty();
+		private var dataInterface:DataInterface = new DataUtahByZip();
 		//
 		//
 		//
@@ -46,10 +47,11 @@ package
 			blackBG.graphics.beginFill(0xeeeeee);
 			blackBG.graphics.drawRect(0, 0, 810, 650);
 			blackBG.graphics.endFill();
-			addChild(blackBG); // !!!
+			addChild(blackBG);
 			
+			this.DEBUGInfo("HERE");
 			
-			ZUI = new ZoomUI(1.2, 0.1, 10.0);
+			ZUI = new ZoomUI(0.1, 0.1, 10.0);
 			this.addEventListener( MouseEvent.MOUSE_DOWN, onDrag);
 			ZUI.addEventListener(Event.CHANGE, ZUIHandler);
 			ZUI.addMapControl();
@@ -276,7 +278,7 @@ package
 		*/
 		private function DEBUGInfo(info:String):void {
 			var title : TextSprite = new TextSprite();
-			title.color = 0x000000;
+			title.color = 0;
 			title.alpha = 1;
 			title.font = "Calibri";
 			title.x = 0;
