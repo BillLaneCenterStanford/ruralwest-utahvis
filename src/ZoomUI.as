@@ -43,8 +43,8 @@ package
 			
 			frame_height = 540;
 			frame_width = 720;
-			image_left = -460;
-			image_top = -620
+			image_left = 0;//-460;
+			image_top = 0;//-620
 			
 			image_left2 = 46;
 			image_top2 = 4;
