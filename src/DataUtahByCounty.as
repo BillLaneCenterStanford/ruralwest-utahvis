@@ -29,6 +29,10 @@ package
 		private var abs_change_papn:String;
 		private var prevCounty:String;
 		
+		public function DataUtahByCounty()
+		{
+			// do nothing right now, all hard-coded ...
+		}
 		
 		public function getYears():Array {
 			return this.years;
@@ -241,7 +245,6 @@ package
 		}
 		
 		public function handleTooltip(mapObj:ShpMapObject, event:Event):void {
-			//var cnty:String = mapObj.getCounty();
 			var cnty:String = this.getDataByFieldName("countyname");
 			if(cnty.length > 0){
 				tt_county.text = this.countyname.toUpperCase() + " county";
@@ -349,9 +352,8 @@ package
 			return str.replace(/^\s+|\s+$/g, '');
 		}
 		
-		public function DataUtahByCounty()
-		{
-			// do nothing right now, all hard-coded ...
+		public function getDebugString():String {
+			return "$DataUtahByCounty Nothing$";
 		}
 	}
 }

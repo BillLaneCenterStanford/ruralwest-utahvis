@@ -29,5 +29,7 @@ package
 		function getDataByFieldName(field:String):String;
 		
 		function getDefaultMapIndex():int;
+		
+		function getDebugString():String;
 	}
 }
