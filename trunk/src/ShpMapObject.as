@@ -39,6 +39,8 @@ package
 		private var border:Boolean;  
 		private var highlight_urban:Boolean = false;
 		
+		private var debugString:String = "$ShpMapObject$";
+		
 		
 		public function ShpMapObject(width:int, height:int, mapContainer:Sprite, inputDataInterface:DataInterface, progressBar:ProgressBar = null)
 		{
@@ -155,9 +157,6 @@ package
 			if (mapLoadedCount >= years.length) {
 				dispatchEvent(new Event("all map loaded",true));
 			}
-			
-			var map:Object = event.target;
-			
 		}
 		
 		public function updateMapColor():void {
@@ -248,6 +247,10 @@ package
 		
 		public function getHighlightUrban (inbool:Boolean):void{
 			highlight_urban = inbool;
+		}
+		
+		public function getDebugString():String {
+			return debugString + mapArray[0].getDebugString();
 		}
 	}
 }

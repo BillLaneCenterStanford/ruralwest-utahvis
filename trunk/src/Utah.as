@@ -49,9 +49,7 @@ package
 			blackBG.graphics.endFill();
 			addChild(blackBG);
 			
-			this.DEBUGInfo("HERE");
-			
-			ZUI = new ZoomUI(0.1, 0.1, 10.0);
+			ZUI = new ZoomUI(100, 50, 200);
 			this.addEventListener( MouseEvent.MOUSE_DOWN, onDrag);
 			ZUI.addEventListener(Event.CHANGE, ZUIHandler);
 			ZUI.addMapControl();
@@ -190,8 +188,6 @@ package
 			mapObj.SetMapColor(0xff0000);
 			mapObj.SetMap(0, 0, 800, 610);
 			
-			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
-			
 			//initTTGraphics();
 			
 			addChild(_bar);
@@ -206,6 +202,8 @@ package
 			mapObj.updateMapColor();
 			mapObj.SetMapEmbedSrc(this.dataInterface.getDefaultMapIndex());
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
+			
+			this.DEBUGInfo(mapObj.getDebugString() + this.dataInterface.getDebugString());
 		}
 		
 		
