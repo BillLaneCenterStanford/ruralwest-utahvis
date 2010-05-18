@@ -347,6 +347,26 @@ package
 			
 			return result;
 		}
+		
+		public function getInitialZoom():Number {
+			return 1.2;
+		}
+		
+		public function getMaxZoom():Number {
+			return 0.5;
+		}
+		
+		public function getMinZoom():Number {
+			return 10;
+		}
+		
+		public function getImageLeft():int {
+			return -460;
+		}
+		
+		public function getImageTop():int {
+			return -620;
+		}
 
 		private function trim(str:String) : String {
 			return str.replace(/^\s+|\s+$/g, '');

@@ -77,10 +77,48 @@ package
 				}
 				
 				zip = trim(features[i].values["ZIP"]);
-				var color:uint = 0x000F00;
+				var color:uint = 0xCCCCCC;
 				if (zip.length > 0 && dictData.hasOwnProperty(zip)) {
-					features[i].draw(color, color * parseInt(dictData[zip].ph));
+					//features[i].draw(color, color * parseInt(dictData[zip].ph));
+					
+					var change_ph:Number = dictData[zip].change_ph;
+					var change_panp:Number = dictData[zip].change_panp;
+					
+					if (change_ph == 0 && change_panp == 0) {
+						color = 0xcccccc;
+					}
+					else {
+						if (change_ph > 0 && change_panp > 0) {
+							if (change_ph > change_panp) {
+								color = 0x489100;
+							}
+							else {
+								color = 0x9FDB64;
+							}
+						}
+						else if (change_ph < 0 && change_panp < 0) {
+							if (change_ph < change_panp) {
+								color = 0xD9958A;
+							}
+							else {
+								color = 0xcc0000;
+							}
+						}
+						else {
+							if (change_ph > change_panp) {
+								color = 0x489100;
+							}
+							else {
+								color = 0xD9958A;
+							}
+						}
+					}
 				}
+				else {
+					color = 0xAAAAAA;
+				}
+				
+				features[i].draw(color, color);
 			}
 		}
 		
@@ -161,7 +199,7 @@ package
 				this.tt_zip.text = "ZIP: " + this.zip;
 				this.tt_pop.text = "Population: " + this.pop.toString();
 				this.tt_ph.text = "MD: " + this.ph + " (" + abs_change_ph + " from 1998)";
-				this.tt_panp.text = "MD: " + this.panp + " (" + abs_change_panp + " from 1998)";
+				this.tt_panp.text = "PA+NP: " + this.panp + " (" + abs_change_panp + " from 1998)";
 			}
 			else {
 				this.tt_zip.text = "";
@@ -249,6 +287,26 @@ package
 		
 		private function trim(str:String) : String {
 			return str.replace(/^\s+|\s+$/g, '');
+		}
+		
+		public function getInitialZoom():Number {
+			return 100;
+		}
+
+		public function getMaxZoom():Number {
+			return 50;
+		}
+		
+		public function getMinZoom():Number {
+			return 200;
+		}
+		
+		public function getImageLeft():int {
+			return 55;
+		}
+		
+		public function getImageTop():int {
+			return 70;
 		}
 		
 		public function getDebugString():String {
