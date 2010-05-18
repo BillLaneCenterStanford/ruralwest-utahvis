@@ -1,5 +1,9 @@
-python csv2xml_utah_by_county.py ../dat/Utah_PH_PA_1998.txt ../dat/Utah_PH_PA_1998.xml
-python csv2xml_utah_by_county.py ../dat/Utah_PH_PA_2003.txt ../dat/Utah_PH_PA_2003.xml
-python csv2xml_utah_by_county.py ../dat/Utah_PH_PA_2008.txt ../dat/Utah_PH_PA_2008.xml
-#python csv2xml_utah_by_zip.py ../dat/utah_by_zip_1998.txt ../dat/utah_by_zip_1998.xml
-#python csv2xml_utah_by_zip.py ../dat/utah_by_zip_2003.txt ../dat/utah_by_zip_2003.xml
+#python csv2xml_utah_by_county.py ../dat/Utah_PH_PA_1998.txt ../dat/Utah_PH_PA_1998.xml
+#python csv2xml_utah_by_county.py ../dat/Utah_PH_PA_2003.txt ../dat/Utah_PH_PA_2003.xml
+#python csv2xml_utah_by_county.py ../dat/Utah_PH_PA_2008.txt ../dat/Utah_PH_PA_2008.xml
+
+python csv2xml_utah_by_zip.py ../dat/utah_by_zip_1998.txt ../dat/utah_by_zip_1998.xml
+python csv2xml_utah_by_zip.py ../dat/utah_by_zip_2003.txt ../dat/utah_by_zip_2003.xml
+
+#python 9_add_pop.py ../dat/population_utah_zip_1998.txt ../dat/utah_by_zip_1998.txt > ./utah_by_zip_1998.txt
+#python 9_add_pop.py ../dat/population_utah_zip_1998.txt ../dat/utah_by_zip_2003.txt > ./utah_by_zip_2003.txt

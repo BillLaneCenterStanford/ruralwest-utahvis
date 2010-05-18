@@ -49,7 +49,11 @@ package
 			blackBG.graphics.endFill();
 			addChild(blackBG);
 			
-			ZUI = new ZoomUI(100, 50, 200);
+			ZUI = new ZoomUI(
+				this.dataInterface,
+				this.dataInterface.getInitialZoom(),
+				this.dataInterface.getMinZoom(),
+				this.dataInterface.getMaxZoom());
 			this.addEventListener( MouseEvent.MOUSE_DOWN, onDrag);
 			ZUI.addEventListener(Event.CHANGE, ZUIHandler);
 			ZUI.addMapControl();
@@ -103,6 +107,7 @@ package
 			this.dataInterface.drawTooltip(this);
 			
 			// HIGHLIGHT URBAN CHECK BOX
+			/*
 			urbanBorderCB = new CheckBox();
 			urbanBorderCB.x = 630;
 			urbanBorderCB.y = 220;
@@ -119,6 +124,7 @@ package
 			ub_label.x = 657;
 			ub_label.y = 215;
 			addChild(ub_label);
+			*/
 			
 			// LEGEND
 			var ltitle:TextSprite = new TextSprite("Legend");
@@ -202,8 +208,6 @@ package
 			mapObj.updateMapColor();
 			mapObj.SetMapEmbedSrc(this.dataInterface.getDefaultMapIndex());
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
-			
-			this.DEBUGInfo(mapObj.getDebugString() + this.dataInterface.getDebugString());
 		}
 		
 		

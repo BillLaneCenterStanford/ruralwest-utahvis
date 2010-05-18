@@ -31,5 +31,12 @@ package
 		function getDefaultMapIndex():int;
 		
 		function getDebugString():String;
+		
+		function getInitialZoom():Number;
+		function getMaxZoom():Number;
+		function getMinZoom():Number;
+		
+		function getImageLeft():int;
+		function getImageTop():int;
 	}
 }

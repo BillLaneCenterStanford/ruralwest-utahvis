@@ -30,10 +30,15 @@ package
 		private var scale_factor_min:Number = 1;
 		private var scale_factor_max:Number = 4;
 		
-		public function ZoomUI(SCALE_FACTOR_DEFAULT:Number = 2.3,
+		private var dataInterface:DataInterface;
+		
+		public function ZoomUI(_dataInterface:DataInterface,
+							   SCALE_FACTOR_DEFAULT:Number = 2.3,
 							   SCALE_FACTOR_MIN:Number = 1, 
 							   SCALE_FACTOR_MAX:Number = 4)
 		{
+			this.dataInterface = _dataInterface;
+			
 			ZoomLabel = new TextSprite();
 			ZoomNumber = new TextSprite();
 			
@@ -43,8 +48,9 @@ package
 			
 			frame_height = 540;
 			frame_width = 720;
-			image_left = 0;//-460;
-			image_top = 0;//-620
+			
+			image_left = this.dataInterface.getImageLeft();
+			image_top = this.dataInterface.getImageTop();
 			
 			image_left2 = 46;
 			image_top2 = 4;
