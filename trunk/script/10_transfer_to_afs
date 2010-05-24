@@ -1,9 +1,10 @@
 echo "copy shape files to shp/"
-scp ../shp/utzip.shp ../shp/utzip.dbf yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/shp
+#scp ../shp/utzip.shp ../shp/utzip.dbf yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/shp
+#scp ../shp/utah_zcta.shp ../shp/utah_zcta.dbf yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/shp
 
 echo "copy data files to dat/"
-scp ../dat/utah_by_zip_1998.txt ../dat/utah_by_zip_1998.xml ../dat/utah_by_zip_2003.txt ../dat/utah_by_zip_2003.xml yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/dat
+#scp ../dat/utah_by_zip_1998.txt ../dat/utah_by_zip_1998.xml ../dat/utah_by_zip_2003.txt ../dat/utah_by_zip_2003.xml yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/dat
+#scp ../dat/utah_by_zcta_1998.xml ../dat/utah_by_zcta_1998.xml yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/dat
 
 echo "copy swf files to web/"
-scp ../bin-debug/Utah.html yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/web/
-scp ../bin-debug/Utah.swf yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/web/swf/
+scp ../bin-release/Utah.swf yinfeng@corn.stanford.edu:/afs/ir.stanford.edu/group/ruralwest/cgi-bin/web/swf/
