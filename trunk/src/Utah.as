@@ -36,7 +36,8 @@ package
 		// project specific data interface
 		//
 		//private var dataInterface:DataInterface = new DataUtahByCounty();
-		private var dataInterface:DataInterface = new DataUtahByZip();
+		//private var dataInterface:DataInterface = new DataUtahByZip();
+		private var dataInterface:DataInterface = new DataUtahByZcta();
 		//
 		//
 		//
