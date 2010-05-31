@@ -5,6 +5,8 @@ package
 	import flare.display.TextSprite;
 	import flare.widgets.ProgressBar;
 	
+	import flash.display.Bitmap;
+	import flash.display.Shape;
 	import flash.display.Sprite;
 	import flash.events.*;
 	import flash.filters.DropShadowFilter;
@@ -17,6 +19,7 @@ package
 		
 		// the map object for the SVG map and frame
 		private var mapObj:ShpMapObject;
+		private var mapContainer:Sprite;
 		
 		private var blackBG:Sprite;
 		
@@ -30,6 +33,8 @@ package
 		
 		private var urbanBorderCB:CheckBox = new CheckBox();
 		
+		private var ruralCB:CheckBox = new CheckBox();
+		
 		private var myLegend:LegendBar;
 		
 		//
@@ -41,6 +46,10 @@ package
 		//
 		//
 		//
+		
+		[Embed(source = "../img/lightBW.png")]
+		private var lightMap:Class;
+		private var instLightMap:Bitmap;
 		
 		public function Utah()
 		{
@@ -127,6 +136,24 @@ package
 			addChild(ub_label);
 			*/
 			
+			// RURAL OVERLAY
+			ruralCB = new CheckBox();
+			ruralCB.x = 630;
+			ruralCB.y = 220;
+			ruralCB.selected = false;
+			ruralCB.label = "";
+			ruralCB.addEventListener(Event.CHANGE, CBRuralHandler);
+			addChild(ruralCB);
+			
+			var rural_label:TextSprite = new TextSprite("Rural Overlay");
+			rural_label.font = "Calibri";
+			rural_label.size = 16;
+			rural_label.color = 0xffffff;
+			rural_label.alpha = 0.8;
+			rural_label.x = 657;
+			rural_label.y = 218;
+			addChild(rural_label);
+			
 			// LEGEND
 			var ltitle:TextSprite = new TextSprite("Legend");
 			ltitle.color = 0xffffff;
@@ -173,9 +200,13 @@ package
 			mapObj.updateMapColor();
 		}
 		
+		private function CBRuralHandler(event:Event):void {
+			instLightMap.visible = this.ruralCB.selected;
+		}
+		
 		private function loadMap():void
 		{
-			var mapContainer : Sprite = new Sprite();
+			mapContainer = new Sprite();
 			mapContainer.graphics.beginFill(0x555555);
 			mapContainer.graphics.drawRect(5 ,35, 800, 610);
 			mapContainer.graphics.endFill();
@@ -198,9 +229,34 @@ package
 			//initTTGraphics();
 			
 			addChild(_bar);
+			
+			// Overlay map
+			instLightMap = new lightMap as Bitmap;
+			var boundLightMap:Shape = new Shape();
+			boundLightMap.graphics.clear();
+			boundLightMap.graphics.beginFill(0x000000);
+			boundLightMap.graphics.drawRect(0, 50, 810, 560);
+			boundLightMap.graphics.endFill();
+			instLightMap.mask = boundLightMap;
+			
+			/*
+			instLightMap.scaleX = ZUI.getScaleFactor()*0.9;
+			instLightMap.scaleY = ZUI.getScaleFactor()*0.9;
+			instLightMap.x = ZUI.getImageLeft2();
+			instLightMap.y = ZUI.getImageTop2();
+			*/
+			instLightMap.scaleX = 1;
+			instLightMap.scaleX = 1;
+			instLightMap.x = 10;
+			instLightMap.y = 10;
 		}
 		
 		private function allMapLoaded(event:Event):void {
+			// Overlay map
+			instLightMap.visible = false;
+			mapContainer.addChild(instLightMap);
+			
+			
 			try {
 				removeChild(_bar);
 			} catch (e:ArgumentError) {
@@ -260,6 +316,12 @@ package
 		{
 			// do rescale functions here
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
+			
+			// also update overlay map
+			instLightMap.scaleX = ZUI.getScaleFactor()*0.9;
+			instLightMap.scaleY = ZUI.getScaleFactor()*0.9;
+			instLightMap.x = ZUI.getImageLeft2();
+			instLightMap.y = ZUI.getImageTop2();
 		}
 		
 		private function ttHandler(event:Event):void
