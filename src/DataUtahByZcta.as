@@ -1,5 +1,6 @@
 package
 {
+	import flare.display.RectSprite;
 	import flare.display.TextSprite;
 	
 	import flash.display.Sprite;
@@ -13,6 +14,7 @@ package
 		
 		// tooltip text sprites
 		private var tt_zcta:TextSprite;
+		private var tt_empty:TextSprite;
 		private var tt_panp:TextSprite;
 		private var tt_ph:TextSprite;
 		private var tt_pop:TextSprite;
@@ -82,38 +84,33 @@ package
 				zcta = trim(features[i].values["ZCTA"]);
 				var color:uint = 0xCCCCCC;
 				if (zcta.length > 0 && dictData.hasOwnProperty(zcta)) {
-					
 					var change_ph:Number = dictData[zcta].change_ph;
 					var change_panp:Number = dictData[zcta].change_panp;
+					var panp03:Number = dictData[zcta].panp;
+					var ph03:Number = dictData[zcta].ph;
+					var panp98:Number = panp03 - change_panp;
+					var ph98:Number = ph03 - change_ph;
 					
-					if (change_ph == 0 && change_panp == 0) {
-						color = 0xcccccc;
-					}
-					else {
-						if (change_ph > 0 && change_panp > 0) {
-							if (change_ph > change_panp) {
-								color = 0x489100;
-							}
-							else {
-								color = 0x9FDB64;
-							}
-						}
-						else if (change_ph < 0 && change_panp < 0) {
-							if (change_ph < change_panp) {
-								color = 0xD9958A;
-							}
-							else {
-								color = 0xcc0000;
-							}
+					var ratio98:Number = ph98 / panp98;
+					var ratio03:Number = ph03 / panp03;
+					
+					if (change_panp > 0 || change_ph > 0) {			// increase
+						if (ratio03 >= ratio98) {
+							color = 0x489100;
 						}
 						else {
-							if (change_ph > change_panp) {
-								color = 0x489100;
-							}
-							else {
-								color = 0xD9958A;
-							}
+							color = 0x9FDB64;
 						}
+					}
+					else if (change_panp < 0 || change_ph < 0) {	// decrease
+						color = 0xCC0000;
+					}
+					else if (panp03 == 0 && ph03 == 0 &&			// no data
+						     panp98 == 0 && ph98 == 0) {
+						color = 0xCCCCCC;
+					}
+					else {											// no change
+						color = 0xFFFF99;
 					}
 				}
 				else {
@@ -129,6 +126,39 @@ package
 											   legendSprite:Sprite, 
 											   textContainer:Sprite):void
 		{
+			var arrayColor:Array = new Array(
+				0x489100,
+				0x9FDB64,
+				0xCC0000,
+				0xFFFF99,
+				0xCCCCCC);
+			var arrayLegend:Array = new Array(
+				"MD/(PA+NP) 03' > 98'",
+				"MD/(PA+NP) 03' < 98'",
+				"MD or PA+NP decreasing",
+				"MD and PA+NP no change",
+				"no MD and PA+NP");
+			
+			var offsetY:int = 10;
+			var L:int = 15;
+			for (var i:int = 0; i < arrayColor.length; i++) {
+				var colorBox:Sprite = new Sprite();
+				colorBox.x = ox - 3;
+				colorBox.y = oy + i * L + offsetY;
+				colorBox.graphics.beginFill(arrayColor[i]);
+				colorBox.graphics.drawRect(0, 0, L, L);
+				colorBox.graphics.endFill();
+				textContainer.addChild(colorBox);
+				
+				var legend:TextSprite = new TextSprite();
+				legend.text = arrayLegend[i];
+				legend.x = ox + 15;
+				legend.y = oy + i * L + offsetY;
+				legend.color = 0xFFFFFF;
+				legend.font = "Arial";
+				legend.size = 10;
+				textContainer.addChild(legend);
+			}
 		}
 		
 		public function drawTooltip(root:Sprite):void
@@ -155,6 +185,16 @@ package
 			tt_zcta.y = tt_oy;
 			tt_zcta.visible = true;
 			root.addChild(tt_zcta);
+			
+			tt_empty = new TextSprite("Mouse over");
+			tt_empty.color = 0xffffff;
+			tt_empty.alpha = 0.8;
+			tt_empty.size = tt_text_size;
+			tt_empty.font = "Calibri";
+			tt_empty.x = tt_ox;
+			tt_empty.y = tt_oy + tt_vert_spacing*1;
+			tt_empty.visible = true;
+			root.addChild(tt_empty);
 			
 			tt_pop = new TextSprite("area for physicians");
 			tt_pop.color = 0xffffff;
@@ -202,12 +242,14 @@ package
 				
 				
 				this.tt_zcta.text = "ZCTA: " + this.zcta;
-				this.tt_pop.text = "Population: " + this.pop.toString();
+				this.tt_empty.text = "";
+				this.tt_pop.text = "Population (2000'): " + this.pop.toString();
 				this.tt_ph.text = "MD: " + this.ph + " (" + abs_change_ph + " from 1998)";
 				this.tt_panp.text = "PA+NP: " + this.panp + " (" + abs_change_panp + " from 1998)";
 			}
 			else {
 				this.tt_zcta.text = "";
+				this.tt_empty.text = "Mouse over";
 				this.tt_pop.text = "area for physicians";
 				this.tt_ph.text = "data.";
 				this.tt_panp.text = "";
