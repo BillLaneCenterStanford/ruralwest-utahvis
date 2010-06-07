@@ -245,10 +245,10 @@ package
 			instLightMap.x = ZUI.getImageLeft2();
 			instLightMap.y = ZUI.getImageTop2();
 			*/
-			instLightMap.scaleX = 1;
-			instLightMap.scaleX = 1;
-			instLightMap.x = 10;
-			instLightMap.y = 10;
+			instLightMap.scaleX = 0.7;
+			instLightMap.scaleX = 0.7;
+			instLightMap.x = -280;
+			instLightMap.y = -680;
 		}
 		
 		private function allMapLoaded(event:Event):void {

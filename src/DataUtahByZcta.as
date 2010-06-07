@@ -331,7 +331,8 @@ package
 		}
 		
 		public function getInitialZoom():Number {
-			return 100;
+			//return 0.0015;  // for the projected one
+			return 100;  // for the original one
 		}
 		
 		public function getMaxZoom():Number {
