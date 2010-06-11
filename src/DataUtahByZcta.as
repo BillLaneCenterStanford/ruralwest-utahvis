@@ -107,10 +107,10 @@ package
 					}
 					else if (panp03 == 0 && ph03 == 0 &&			// no data
 						     panp98 == 0 && ph98 == 0) {
-						color = 0xCCCCCC;
+						color = 0xFFFFCC;
 					}
 					else {											// no change
-						color = 0xFFFF99;
+						color = 0xFFFF00;
 					}
 				}
 				else {
@@ -130,8 +130,8 @@ package
 				0x489100,
 				0x9FDB64,
 				0xCC0000,
-				0xFFFF99,
-				0xCCCCCC);
+				0xFFFF00,
+				0xFFFFCC);
 			var arrayLegend:Array = new Array(
 				"MD/(PA+NP) 03' > 98'",
 				"MD/(PA+NP) 03' < 98'",
