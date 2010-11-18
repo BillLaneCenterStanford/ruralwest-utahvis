@@ -287,13 +287,23 @@ package
 				function( evt:MouseEvent ):void 
 				{
 					// restore to default
-					image_left = -460;
-					image_top = -620;
+					/*
+					image_left = this.dataInterface.getImageLeft();
+					image_top  = this.dataInterface.getImageTop();
 					
-					image_left2 = 46;
-					image_top2 = 4;
+					image_left2 = this.dataInterface.getImageLeft();
+					image_top2  = this.dataInterface.getImageTop();
 					
-					scale_factor = 1.2;
+					scale_factor = this.dataInterface.getInitialZoom();
+					*/
+					image_left = 55;  // these numbers links to DataUtahByZcta.getImageLeft(), getImageTop() ...
+					image_top  = 40;
+					
+					image_left2 = 55;
+					image_top2  = 40;
+					
+					scale_factor = 100;
+					
 					dispatchEvent(new Event(Event.CHANGE));
 				}
 			);

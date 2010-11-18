@@ -33,6 +33,10 @@ package
 		public function DataUtahByZcta()
 		{
 			// do nothing right now, all hard coded...
+			a[0] = Number.POSITIVE_INFINITY;
+			a[1] = Number.NEGATIVE_INFINITY;
+			a[2] = Number.POSITIVE_INFINITY;
+			a[3] = Number.NEGATIVE_INFINITY;
 		}
 		
 		public function getYears():Array
@@ -76,11 +80,15 @@ package
 									   highlightBorder:Boolean, 
 									   highlightUrban:Boolean):void
 		{
+			var rMaxX:Number = -Number.MAX_VALUE;
+			var rMaxY:Number = -Number.MAX_VALUE;
+			var rMinX:Number = Number.MAX_VALUE;
+			var rMinY:Number = Number.MAX_VALUE;
 			for (var i:int = 0; i < features.length; i++) {
 				if (!features[i].values) {
 					continue;
 				}
-				
+		
 				zcta = trim(features[i].values["ZCTA"]);
 				var color:uint = 0xCCCCCC;
 				if (zcta.length > 0 && dictData.hasOwnProperty(zcta)) {
@@ -117,8 +125,20 @@ package
 					color = 0xAAAAAA;
 				}
 				
+				rMaxX = (rMaxX > features[i].x) ? rMaxX : features[i].x;
+				rMinX = (rMinX < features[i].x) ? rMinX : features[i].x;
+				rMaxY = (rMaxY > features[i].y) ? rMaxY : features[i].y;
+				rMinY = (rMinY < features[i].y) ? rMinY : features[i].y;
+				
 				features[i].draw(0x666666, color);
+				
+				var temp:Array = features[i].dim();
+				this.a[0] = Math.min(a[0], temp[0]);
+				this.a[1] = Math.max(a[1], temp[1]);
+				this.a[2] = Math.min(a[2], temp[2]);
+				this.a[3] = Math.max(a[3], temp[3]);
 			}
+			this.debugString = this.a.toString();
 		}
 		
 		public function drawLegendForLegendBar(ox:int, oy:int, 
@@ -331,28 +351,29 @@ package
 		}
 		
 		public function getInitialZoom():Number {
-			//return 0.0015;  // for the projected one
-			return 100;  // for the original one
+			return 100;
 		}
 		
 		public function getMaxZoom():Number {
-			return 50;
-		}
-		
-		public function getMinZoom():Number {
 			return 200;
 		}
 		
+		public function getMinZoom():Number {
+			return 30;
+		}
+		
 		public function getImageLeft():int {
-			return 55;
+			return 55;  // for the original one
 		}
 		
 		public function getImageTop():int {
-			return 70;
+			return 40;  // for the original one
 		}
 		
 		public function getDebugString():String {
 			return this.debugString;
 		}
+		
+		private var a:Array = new Array(4);
 	}
 }
