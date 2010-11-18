@@ -137,6 +137,7 @@ package
 			*/
 			
 			// RURAL OVERLAY
+			/*
 			ruralCB = new CheckBox();
 			ruralCB.x = 630;
 			ruralCB.y = 220;
@@ -153,6 +154,7 @@ package
 			rural_label.x = 657;
 			rural_label.y = 218;
 			addChild(rural_label);
+			*/
 			
 			// LEGEND
 			var ltitle:TextSprite = new TextSprite("Legend");
@@ -192,7 +194,7 @@ package
 			addChild(lpn);
 			
 			myLegend = new LegendBar(640, 375, 30, 6, dataInterface);
-			addChild(myLegend);
+			addChild(myLegend);			
 		}
 		
 		private function CBUrbanHandler(event:Event):void {
@@ -263,6 +265,7 @@ package
 				//DO NOTHING
 			}
 			mapObj.updateMapColor();
+			//this.DEBUGInfo(this.dataInterface.getDebugString());
 			mapObj.SetMapEmbedSrc(this.dataInterface.getDefaultMapIndex());
 			mapObj.ScaleAndTranslateMap(ZUI.getScaleFactor(), ZUI.getImageLeft(), ZUI.getImageTop());
 		}
@@ -343,12 +346,12 @@ package
 		*/
 		private function DEBUGInfo(info:String):void {
 			var title : TextSprite = new TextSprite();
-			title.color = 0;
+			title.color = 0xff0000;
 			title.alpha = 1;
 			title.font = "Calibri";
 			title.x = 0;
 			title.y = 0;
-			title.size = 30;
+			title.size = 10;
 			title.text = info;
 			this.addChild(title);
 		}
